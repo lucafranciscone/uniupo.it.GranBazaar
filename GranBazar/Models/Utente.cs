@@ -15,12 +15,10 @@ namespace GranBazar.Models
         [StringLength(50)]
         public String Email { get; set; }
         public String Ruolo { get; set; }
+        
         public string Psw { get; set; }
 
         public ICollection<Ordine> Ordine { get; set; }
-
-
-
 
     }
 }
