@@ -19,5 +19,7 @@ namespace GranBazar.Models
         public System.Nullable<Byte> Sconto  { get;set; }
         public String LinkImmagine { get; set; }
         public Boolean disponibile { get; set; }
+
+        public ICollection<Contiene> Contiene { get; set; }
     }
 }

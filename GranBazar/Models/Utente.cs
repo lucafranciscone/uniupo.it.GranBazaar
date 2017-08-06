@@ -17,5 +17,10 @@ namespace GranBazar.Models
         public String Ruolo { get; set; }
         public string Psw { get; set; }
 
+        public ICollection<Ordine> Ordine { get; set; }
+
+
+
+
     }
 }

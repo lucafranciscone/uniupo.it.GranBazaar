@@ -18,6 +18,9 @@ namespace GranBazar.Models
 
         public Utente Utente { get; set; }
 
+        public ICollection<Contiene> Contiene { get; set; }
+
+
 
 
 

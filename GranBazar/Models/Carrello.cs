@@ -14,5 +14,7 @@ namespace GranBazar.Models
         public DateTime DataCreazioneCarrello { get; set; }
 
         public Utente utente { get; set; }
+
+        public ICollection<Contiene> Contiene { get; set; }
      }
 }
