@@ -10,9 +10,9 @@ namespace GranBazar.Models
     [Table("Contiene")]
     public class Contiene
     {
-        public Carrello IdCarrello { get;set; }
-        public Prodotto IdProdotto { get; set; }
-        public Ordine IdOrdine { get; set; }
+        public Carrello Carrello { get;set; }
+        public Prodotto Prodotto { get; set; }
+        public Ordine Ordine { get; set; }
 
     }
 }
