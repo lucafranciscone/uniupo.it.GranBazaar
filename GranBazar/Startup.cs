@@ -10,7 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using GranBazar.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace GranBazar
 {
