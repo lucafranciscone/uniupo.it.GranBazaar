@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using GranBazar.Models;
 
 namespace GranBazar.Data
 {
@@ -12,7 +12,7 @@ namespace GranBazar.Data
      * */
     public class GranBazarContext : DbContext
     {
-        public GranBazarContext(DbContextOption<GranBazarContext> options) : base(options)
+        public GranBazarContext(DbContextOptions<GranBazarContext> options) : base(options)
         { }
 
         public DbSet<Carrello> Carrello { get; set; }
@@ -25,6 +25,10 @@ namespace GranBazar.Data
 
         public DbSet<Utente> Utente { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Prodotto>().ToTable(nameof(Prodotto));
+        }
 
     }
 }
