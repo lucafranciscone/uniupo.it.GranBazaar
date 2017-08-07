@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using GranBazar;
+using GranBazar.Data;
 
 namespace GranBazar
 {
@@ -20,6 +22,8 @@ namespace GranBazar
                 .Build();
 
             host.Run();
+
+            
         }
     }
 }

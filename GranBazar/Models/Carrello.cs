@@ -10,7 +10,9 @@ namespace GranBazar.Models
     [Table("Carrello")]
     public class Carrello
     {
+        [Key]
         public int IdCarrello { get; set; }
+
         public DateTime DataCreazioneCarrello { get; set; }
 
         public Utente utente { get; set; }

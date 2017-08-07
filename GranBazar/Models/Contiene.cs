@@ -11,7 +11,9 @@ namespace GranBazar.Models
     public class Contiene
     {
         public Carrello Carrello { get;set; }
+
         public Prodotto Prodotto { get; set; }
+
         public Ordine Ordine { get; set; }
 
     }

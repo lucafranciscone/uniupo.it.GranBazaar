@@ -12,17 +12,16 @@ namespace GranBazar.Models
     {
         [Key]
         public int IdOrdine { get; set; }
+
         public DateTime DataOrdine { get; set; }
+
         public string Stato { get; set; }
-        public System.Nullable<DateTime> DataSpedizione {get;set;}
+
+        public DateTime? DataSpedizione {get;set;}
 
         public Utente Utente { get; set; }
 
         public ICollection<Contiene> Contiene { get; set; }
-
-
-
-
 
     }
 }

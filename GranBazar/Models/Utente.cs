@@ -14,6 +14,7 @@ namespace GranBazar.Models
         [Key]
         [StringLength(50)]
         public String Email { get; set; }
+
         public String Ruolo { get; set; }
         
         public string Psw { get; set; }

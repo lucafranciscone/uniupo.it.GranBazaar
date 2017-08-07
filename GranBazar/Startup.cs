@@ -38,7 +38,8 @@ namespace GranBazar
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<GranBazarContext> (options => 
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
         }
 
@@ -60,11 +61,11 @@ namespace GranBazar
             app.UseMvcWithDefaultRoute();
 
            
-
+            //handler globale
             app.Run(async (context) =>
             {
-                //await context.Response.WriteAsync("Hello World!");
-                await context.Response.WriteAsync("Hello World");
+                await context.Response.WriteAsync("Hello World!");
+                
             });
 
 

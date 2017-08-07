@@ -12,14 +12,19 @@ namespace GranBazar.Models
     {
         [Key]
         public int IdProdotto { get; set; }
+
         public string NomeProdotto { get; set; }
+
         public string DesrizioneProgotto { get; set; }
 
         public Decimal Prezzo { get; set; }
-        public System.Nullable<Byte> Sconto  { get;set; }
+
+        public Byte? Sconto  { get;set; }
+
         public String LinkImmagine { get; set; }
+
         public Boolean disponibile { get; set; }
 
-        public ICollection<Contiene> Contiene { get; set; }
+        //public ICollection<Contiene> Contiene { get; set; }
     }
 }
