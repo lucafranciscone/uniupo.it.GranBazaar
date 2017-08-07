@@ -25,6 +25,6 @@ namespace GranBazar.Models
 
         public Boolean disponibile { get; set; }
 
-        public ICollection<Contiene> Contiene { get; set; }
+        //public ICollection<Contiene> Contiene { get; set; }
     }
 }

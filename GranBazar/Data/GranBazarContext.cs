@@ -28,7 +28,8 @@ namespace GranBazar.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Prodotto>().ToTable(nameof(Prodotto));
-        }
+        }
+
 
     }
 }

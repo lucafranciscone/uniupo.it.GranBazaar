@@ -9,23 +9,14 @@ namespace GranBazar.Controllers
 {
     public class HomeController : Controller
     {
-        /*
-        public string Index()
-        {
-            var html = new StringBuilder();
-            html.Append("<html>");
-            html.Append("<body>");
-            html.Append("<h1>HTML</h1>");
-            html.Append("</body>");
-            html.Append("</html>");
-            return html.ToString();
 
-        }*/
+         public IActionResult Index() => View();
 
-        public IActionResult Index() => View();
+        // public IActionResult Prodotti() => View();
 
-        public IActionResult Prodotti() => View();
-
-
+        //"index" è la Action, che per noi adesso è solo l'unico file dentro Views/Prodotti
+        //"Prodotti" è il nome del controller
+        //E' tutto case sensitive, bisogna fare attenzione alla dichirazione dei nomi
+        //public IActionResult Index() => Redirect(Url.Action("Index", "Prodotti"));
     }
 }
