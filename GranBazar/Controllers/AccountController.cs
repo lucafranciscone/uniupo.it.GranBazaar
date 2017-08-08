@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using GranBazar.Models;
+using GranBazar.Data;
 
 namespace GranBazar.Controllers
 {
@@ -12,6 +15,9 @@ namespace GranBazar.Controllers
     {
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
+
+        BazarContext context = new BazarContext();
+        protected DbSet<Utente> utente { get; }
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -62,13 +68,22 @@ namespace GranBazar.Controllers
                     return View();
                 }
                 var passwordSignInResult = await signInManager.PasswordSignInAsync(user, password,
-               isPersistent: rememberMe, lockoutOnFailure: false);
+                    isPersistent: rememberMe, lockoutOnFailure: false);
                 if (!passwordSignInResult.Succeeded)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login");
                     return View();
                 }
-                return Redirect("~/");
+
+                //non funziona
+               var ruolo =
+                    from u in context.Utente
+                    where u.Email.Equals(email)
+                    select u;
+
+                if (utente.Equals("Admin"))
+                    return Redirect("~/");
+                else return Redirect(Url.Action("Index", "Prodotti"));
             }
             catch (Exception e)
             {
