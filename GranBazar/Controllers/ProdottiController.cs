@@ -9,17 +9,21 @@ using GranBazar.Dto;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using GranBazar.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GranBazar.Controllers
 {
-    public class ProdottiController : CrudController<GranBazarContext, int, Prodotto>
+    [Authorize]
+    public class ProdottiController : CrudController<BazarContext, int, Prodotto>
     {
 
-        public ProdottiController(GranBazarContext context, ILogger<ProdottiController> logger) : base(context, logger) { }
+        public ProdottiController(BazarContext context, ILogger<ProdottiController> logger) : base(context, logger) { }
 
         protected override DbSet<Prodotto> Entities => Context.Prodotto;
 
         protected override Func<Prodotto, int, bool> FilterById => (e, id) => e.IdProdotto == id;
+
+        public override Task<IActionResult> Delete(int IdProdotto) =>base.Delete(IdProdotto);
 
     }
 }
