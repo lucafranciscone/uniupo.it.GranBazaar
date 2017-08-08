@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using GranBazar.Data;
 using Microsoft.EntityFrameworkCore;
-
+using GranBazar.Models;
 
 namespace GranBazar
 {
@@ -37,7 +37,7 @@ namespace GranBazar
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GranBazarContext> (options => 
+            services.AddDbContext<BazarContext> (options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc();
