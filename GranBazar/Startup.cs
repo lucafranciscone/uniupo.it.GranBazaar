@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using GranBazar.Data;
 using Microsoft.EntityFrameworkCore;
 using GranBazar.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GranBazar
 {
@@ -37,8 +38,21 @@ namespace GranBazar
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BazarContext> (options => 
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<BazarContext>(options =>
+                options.UseSqlServer(connectionString)
+            );
+
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(
+                    connectionString,
+                    optionsBuilder => optionsBuilder.MigrationsAssembly("GranBazar")
+                )
+            );
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
         }
@@ -52,11 +66,8 @@ namespace GranBazar
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/error");
-            }
 
+            app.UseIdentity();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 

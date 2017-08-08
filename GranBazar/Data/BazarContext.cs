@@ -10,18 +10,28 @@ namespace GranBazar.Data
      * */
     public partial class BazarContext : DbContext
     {
+
+        public BazarContext(DbContextOptions<BazarContext> options) : base(options) { }
+
         public virtual DbSet<Carrello> Carrello { get; set; }
         public virtual DbSet<Contiene> Contiene { get; set; }
         public virtual DbSet<Ordine> Ordine { get; set; }
         public virtual DbSet<Prodotto> Prodotto { get; set; }
         public virtual DbSet<Utente> Utente { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*
+       protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-8RDCTOV;Database=Bazar;Trusted_Connection=True;");
+            modelBuilder.Entity<Carrello>().ToTable(nameof(Carrello));
+            modelBuilder.Entity<Contiene>().ToTable(nameof(Contiene));
+            modelBuilder.Entity<Ordine>().ToTable(nameof(Ordine));
+            modelBuilder.Entity<Prodotto>().ToTable(nameof(Prodotto));
+            modelBuilder.Entity<Utente>().ToTable(nameof(Utente));
         }
+        */
 
+        //questa parte fa funzionare, ma è estremamente lenta all'inizio
+     
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Carrello>(entity =>
@@ -111,5 +121,6 @@ namespace GranBazar.Data
                 entity.Property(e => e.Ruolo).IsRequired();
             });
         }
+        
     }
 }

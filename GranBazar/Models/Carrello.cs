@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GranBazar.Models
 {
@@ -10,6 +11,7 @@ namespace GranBazar.Models
             Contiene = new HashSet<Contiene>();
         }
 
+        [Key]
         public int IdCarrello { get; set; }
         public DateTime DataCreazioneCarrello { get; set; }
         public string Email { get; set; }

@@ -9,9 +9,11 @@ using GranBazar.Dto;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using GranBazar.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GranBazar.Controllers
 {
+    [Authorize]
     public class ProdottiController : CrudController<BazarContext, int, Prodotto>
     {
 
