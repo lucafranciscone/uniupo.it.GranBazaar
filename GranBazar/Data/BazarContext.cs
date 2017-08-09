@@ -11,6 +11,12 @@ namespace GranBazar.Data
     public partial class BazarContext : DbContext
     {
 
+        //public BazarContext(DbContextOptions<BazarContext> options) : base(options) { }
+
+        //utilizziamo un altro modo per connetterci al db, rispetto al prof, usando UseSqlServer sotto e non appsettings.json
+        //questa cosa la dobbiamo risolvere
+
+
         public virtual DbSet<Carrello> Carrello { get; set; }
         public virtual DbSet<Contiene> Contiene { get; set; }
         public virtual DbSet<Ordine> Ordine { get; set; }
@@ -27,13 +33,15 @@ namespace GranBazar.Data
             modelBuilder.Entity<Utente>().ToTable(nameof(Utente));
         }
         */
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-8RDCTOV; Database=Bazar; Trusted_Connection=True;");
+             
         }
 
+
         //questa parte fa funzionare, ma è estremamente lenta all'inizio
-     
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Carrello>(entity =>

@@ -16,7 +16,7 @@ namespace GranBazar.Controllers
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
 
-        BazarContext context = new BazarContext();
+        Query query = new Query();
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -40,6 +40,8 @@ namespace GranBazar.Controllers
                 UserName = email,
                 Email = email
             };
+
+
 
             var userCreationResult = await userManager.CreateAsync(newUser, password);
 
@@ -75,11 +77,10 @@ namespace GranBazar.Controllers
                 }
 
                 //e' una prova, se è un Admin viene rindirizzato da una parte, altrimenti da un altra
-                var ruolo = from r in context.Utente
-                            where r.Email.Equals(email)
-                            select r;
+                var ruolo = query.getRuleByEmail(email);
 
-                if (ruolo.First().Ruolo.Equals("Admin"))
+
+                if (ruolo.Equals("Admin"))
                     return Redirect(Url.Action("Index", "Admin"));
                 else return Redirect(Url.Action("Index", "Prodotti"));
             }

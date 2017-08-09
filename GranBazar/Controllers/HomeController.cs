@@ -14,6 +14,8 @@ namespace GranBazar.Controllers
 
         public IActionResult Index() => View();
 
+
+
         // public IActionResult Prodotti() => View();
 
         //"index" è la Action, che per noi adesso è solo l'unico file dentro Views/Prodotti
