@@ -19,5 +19,7 @@
             </li>
         </ul>
     </form>
+    <input type="button" value="Registrati" class="k-button k-primary" onclick="@("window.location.href='" + @Url.Action("Register", "Account") + "'");"/>
     <div asp-validation-summary="All" class="fieldlist text-error"></div>
 </div>
+

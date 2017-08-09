@@ -17,7 +17,6 @@ namespace GranBazar.Controllers
         readonly SignInManager<IdentityUser> signInManager;
 
         BazarContext context = new BazarContext();
-        protected DbSet<Utente> utente { get; }
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -75,14 +74,13 @@ namespace GranBazar.Controllers
                     return View();
                 }
 
-                //non funziona
-               var ruolo =
-                    from u in context.Utente
-                    where u.Email.Equals(email)
-                    select u;
+                //e' una prova, se è un Admin viene rindirizzato da una parte, altrimenti da un altra
+                var ruolo = from r in context.Utente
+                            where r.Email.Equals(email)
+                            select r;
 
-                if (utente.Equals("Admin"))
-                    return Redirect("~/");
+                if (ruolo.First().Ruolo.Equals("Admin"))
+                    return Redirect(Url.Action("Index", "Admin"));
                 else return Redirect(Url.Action("Index", "Prodotti"));
             }
             catch (Exception e)

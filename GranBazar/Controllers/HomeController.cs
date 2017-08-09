@@ -4,13 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using GranBazar.Data;
+using GranBazar.Models;
 
 namespace GranBazar.Controllers
 {
     public class HomeController : Controller
     {
 
-         public IActionResult Index() => View();
+        public IActionResult Index() => View();
 
         // public IActionResult Prodotti() => View();
 
