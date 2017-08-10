@@ -11,6 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\bootstrap\bootstrap.min.css" />
+    <Content Include="wwwroot\bootstrap\bootstrap.min.css.map" />
+    <Content Include="wwwroot\bootstrap\bootstrap.min.js" />
+    <Content Include="wwwroot\bootstrap\carousel.css" />
+    <Content Include="wwwroot\bootstrap\favicon.ico" />
+    <Content Include="wwwroot\bootstrap\holder.min.js" />
+    <Content Include="wwwroot\bootstrap\jquery-3.2.1.js" />
+    <Content Include="wwwroot\bootstrap\jquery-slim.min.js" />
+    <Content Include="wwwroot\bootstrap\jquery.js" />
     <Content Include="wwwroot\default.html" />
     <Content Include="wwwroot\js\angular.min.js" />
     <Content Include="wwwroot\js\cultures\kendo.culture.af-ZA.min.js" />
@@ -1671,6 +1680,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Carrello\" />
     <Folder Include="Views\User\" />
     <Folder Include="Views\Prodotti\" />
   </ItemGroup>

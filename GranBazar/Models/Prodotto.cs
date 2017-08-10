@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GranBazar.Models
 {
+    [Table("Prodotto")]
     public partial class Prodotto
     {
         public Prodotto()
         {
-            Contiene = new HashSet<Contiene>();
+            OrdineProdotto = new HashSet<OrdineProdotto>();
         }
 
+        [Key]
         public int IdProdotto { get; set; }
         public string NomeProdotto { get; set; }
         public string DescrizioneProdotto { get; set; }
@@ -18,6 +22,6 @@ namespace GranBazar.Models
         public string LinkImmagine { get; set; }
         public bool Disponibile { get; set; }
 
-        public virtual ICollection<Contiene> Contiene { get; set; }
+        public virtual ICollection<OrdineProdotto> OrdineProdotto { get; set; }
     }
 }

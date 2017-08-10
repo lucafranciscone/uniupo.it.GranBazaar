@@ -25,5 +25,6 @@ namespace GranBazar.Controllers
 
         public override Task<IActionResult> Delete(int IdProdotto) =>base.Delete(IdProdotto);
 
+
     }
 }

@@ -12,7 +12,16 @@ namespace GranBazar.Controllers
     public class HomeController : Controller
     {
 
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            Query query = new Query();
+
+            //è un esempio di come mettere i dati e visualizzarli in html
+           // ViewData["numberProductsInCart"] = query.getumberProductsInCart();
+
+
+            return View();
+        }
 
 
 

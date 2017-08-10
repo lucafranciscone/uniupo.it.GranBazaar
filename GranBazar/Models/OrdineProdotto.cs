@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GranBazar.Models
 {
-    public partial class Contiene
+    [Table("OrdineProdotto")]
+    public partial class OrdineProdotto
     {
-        public int IdCarrello { get; set; }
-        public int IdProdotto { get; set; }
-        public int IdOrdine { get; set; }
 
-        public virtual Carrello IdCarrelloNavigation { get; set; }
+        public int IdOrdine { get; set; }
+        public int IdProdotto { get; set; }
+        public int Quantita { get; set; }
+
         public virtual Ordine IdOrdineNavigation { get; set; }
         public virtual Prodotto IdProdottoNavigation { get; set; }
     }

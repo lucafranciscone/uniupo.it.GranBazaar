@@ -35,11 +35,11 @@ Email nvarchar(50) NULL FOREIGN KEY REFERENCES dbo.Utente (Email) on update casc
 );
 
 
-CREATE TABLE Contiene(
-IdCarrello int FOREIGN KEY REFERENCES dbo.Carrello (IdCarrello) on update cascade on delete cascade, 
+CREATE TABLE Ordine_Prodotto(
+IdOrdine int FOREIGN KEY REFERENCES dbo.Ordine (IdOrdine) on update cascade on delete cascade, 
 IdProdotto int FOREIGN KEY REFERENCES dbo.Prodotto (IdProdotto) on update cascade on delete cascade, 
-IdOrdine int FOREIGN KEY REFERENCES dbo.Ordine (IdOrdine),
-primary key (IdCarrello, IdProdotto, IdOrdine)
+Quantita int not null,
+primary key (IdProdotto, IdOrdine)
 );
 
 

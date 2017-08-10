@@ -41,9 +41,9 @@ namespace GranBazar.Controllers
                 Email = email
             };
 
-
-
             var userCreationResult = await userManager.CreateAsync(newUser, password);
+
+            //query.insertUser(email, password);
 
             if (!userCreationResult.Succeeded)
             {
@@ -77,12 +77,12 @@ namespace GranBazar.Controllers
                 }
 
                 //e' una prova, se è un Admin viene rindirizzato da una parte, altrimenti da un altra
-                var ruolo = query.getRuleByEmail(email);
+                var ruolo = "Admin";//query.getRuleByEmail(email);
 
-
+                System.Console.WriteLine($"Il ruolo e: {ruolo}");
                 if (ruolo.Equals("Admin"))
-                    return Redirect(Url.Action("Index", "Admin"));
-                else return Redirect(Url.Action("Index", "Prodotti"));
+                    return Redirect(Url.Action("Index", "Prodotti"));
+                else return Redirect(Url.Action("Index", "User"));
             }
             catch (Exception e)
             {
