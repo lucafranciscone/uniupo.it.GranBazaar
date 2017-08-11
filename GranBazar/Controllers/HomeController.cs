@@ -6,21 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using GranBazar.Data;
 using GranBazar.Models;
+using Microsoft.Extensions.Logging;
 
 namespace GranBazar.Controllers
 {
     public class HomeController : Controller
     {
 
+        BazarContext Context;
+        ILogger Logger;
+
+        public HomeController (BazarContext context, ILogger<ProdottiController> logger)  {
+            Context = context;
+            Logger = logger;
+        }
+
         public IActionResult Index()
         {
-            Query query = new Query();
+
+            var query =
+                from x in Context.Prodotto
+                select x;
+
 
             //è un esempio di come mettere i dati e visualizzarli in html
-           // ViewData["numberProductsInCart"] = query.getumberProductsInCart();
+            // ViewData["numberProductsInCart"] = query.getumberProductsInCart();
+            foreach (var x in query)
+                System.Console.WriteLine(x);
 
-
-            return View();
+            return View(query.ToList());
         }
 
 
