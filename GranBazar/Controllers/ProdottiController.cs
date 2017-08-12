@@ -11,20 +11,34 @@ using System.Diagnostics;
 using GranBazar.Models;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace GranBazar.Controllers
 {
-    [Authorize]
-    public class ProdottiController : CrudController<BazarContext, int, Prodotto>
+
+    public class ProdottiController : Controller
     {
 
-        public ProdottiController(BazarContext context, ILogger<ProdottiController> logger) : base(context, logger) { }
+        BazarContext Context;
+        public ProdottiController(BazarContext context, ILogger<ProdottiController> logger)  {
+            Context = context;
+        }
 
-        protected override DbSet<Prodotto> Entities => Context.Prodotto;
+        //protected override DbSet<Prodotto> Entities => Context.Prodotto;
 
-        protected override Func<Prodotto, int, bool> FilterById => (e, id) => e.IdProdotto == id;
+        //protected override Func<Prodotto, int, bool> FilterById => (e, id) => e.IdProdotto == id;
 
-        public override Task<IActionResult> Delete(int IdProdotto) =>base.Delete(IdProdotto);
+        // public override Task<IActionResult> Delete(int IdProdotto) =>base.Delete(IdProdotto);
 
+        public IActionResult SchedaProdotto(int id)
+        {
+            var query = 
+                from x in Context.Prodotto
+                where x.IdProdotto == id
+                select x;
 
+            return View(query.First());
+        }
+
+        public IActionResult Index() => View();
     }
 }

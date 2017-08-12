@@ -1,0 +1,71 @@
+﻿@model GranBazar.Models.Prodotto
+
+@{
+    ViewBag.Title = @Model.NomeProdotto;
+}
+
+
+
+<div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="item-container">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="product col-md-3 service-image-left">
+
+                        <center>
+                            <img id="item-display" src="@Model.LinkImmagine" alt="" style="max-height:150px;"></img>
+                        </center>
+                    </div>
+
+            
+                </div>
+
+                <div class="col-md-7">
+                    <div class="product-title">@Model.NomeProdotto</div>
+                    <div class="product-desc">@Model.DescrizioneProdotto</div>
+                    <hr>
+                    <div class="product-price">€ @Model.Prezzo</div>
+                    <div class="product-price">@if (@Model.Sconto > 0) {@Model.Sconto}</div>
+                    <div class="product-stock">@if (@Model.Disponibile)
+                    {<p style="color:green;">Disponibile</p>} else {<p style="color:red;">Non disponibile</p>} </div>
+                    <hr>
+                    @if (Model.Disponibile){
+                    <div class="btn-group cart">
+                        <button type="button" class="btn btn-success">
+                            Aggiungi al carrello
+                        </button>
+                    </div>}
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="col-md-12 product-info">
+                <ul id="myTab" class="nav nav-tabs nav_tabs">
+
+                    <li class="active"><a href="#service-one" data-toggle="tab">Descrizione</a></li>
+                   
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="service-one">
+
+                        <section class="container product-info">
+                            
+                            <h3>@Model.NomeProdotto:</h3>
+                            <li>@Model.DescrizioneProdotto</li></section>
+
+                    </div>
+                    <div class="tab-pane fade" id="service-two">
+
+                        <section class="container"></section>
+
+                    </div>
+                    <div class="tab-pane fade" id="service-three">
+
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>

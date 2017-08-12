@@ -1682,7 +1682,6 @@
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Carrello\" />
     <Folder Include="Views\User\" />
-    <Folder Include="Views\Prodotti\" />
   </ItemGroup>
 
 
