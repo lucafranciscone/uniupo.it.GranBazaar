@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GranBazar.Models;
+using Microsoft.AspNetCore.Http;
+using GranBazar.Src;
 
 namespace GranBazar.Controllers
 {
@@ -28,17 +30,21 @@ namespace GranBazar.Controllers
 
             if (prodottiInCarrello != null)
             {
+
                 prodottiInCarrello.Add(query.First());
+
             }
             else {
+
                 prodottiInCarrello = new List<Prodotto>();
                 prodottiInCarrello.Add(query.First());
             }
 
-            
+            HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", prodottiInCarrello);
+           // HttpContext.Session.SetInt32("id",id);
 
-            ViewBag.ProdottiLista = prodottiInCarrello;
-
+            //var t = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
+            //System.Console.WriteLine($"Nel carrello ci sono: {t.First().NomeProdotto}");
             return View();
         }
 

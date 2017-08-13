@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using GranBazar.Data;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +57,21 @@ namespace GranBazar
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            // Adds a default in-memory implementation of IDistributedCache.
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(180);
+                options.CookieHttpOnly = true;
+            });
+
         }
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -67,6 +83,7 @@ namespace GranBazar
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSession();
             app.UseIdentity();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
