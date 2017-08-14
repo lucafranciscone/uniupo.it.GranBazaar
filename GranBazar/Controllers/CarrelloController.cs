@@ -52,7 +52,7 @@ namespace GranBazar.Controllers
             return View();
         }
 
-       
+       //Da rifattorizzare
         public IActionResult RimuoviProdotto(int id)
         {
             var query =
@@ -61,11 +61,16 @@ namespace GranBazar.Controllers
                 select x;
 
             var temp = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
+            HttpContext.Session.Remove("prodottiCarrello");
+            int pos = 0;
+            foreach (var x in temp)
+                if (x.IdProdotto == id)
+                    pos = temp.IndexOf(x);
 
-            temp.Remove(query.First());
+            temp.RemoveAt(pos);
             HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", temp);
+            return RedirectToAction("Index");
 
-            return Redirect("/Carrello/Index");
         }
 
 
