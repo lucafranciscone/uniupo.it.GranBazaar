@@ -4,6 +4,7 @@
 @{ 
     ViewBag.Title = "Carrello";
     var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("prodottiCarrello");
+    decimal tot = 0;
 }
 
 <div class="container" style="margin-top:50px;">
@@ -38,9 +39,13 @@
                     <input type="number" class="form-control text-center" value="1" min="1">
                 </td>
                 <td data-th="Subtotal" class="text-center">@if (product.Sconto > 0)
-                { <p>&euro; @(Math.Round((Decimal)(product.Prezzo - product.Prezzo / 100 * product.Sconto), 2))</p>}
+                { <p>&euro; @(Math.Round((Decimal)(product.Prezzo - product.Prezzo / 100 * product.Sconto), 2))</p>
+                    tot += Math.Round((Decimal)(product.Prezzo - product.Prezzo / 100 * product.Sconto), 2);
+                }
                 else
-                {<p>&euro; @product.Prezzo</p>} 
+                {<p>&euro; @product.Prezzo</p>
+                    tot += product.Prezzo;
+                } 
                     </td>
                 <td class="actions" data-th="">
                     <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
@@ -55,7 +60,7 @@
             <tr>
                 <td><a href="/Home/Index" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continua lo shopping</a></td>
                 <td colspan="3" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total &euro; 1.99</strong></td>
+                <td class="hidden-xs text-center"><strong>Totale &euro; @tot</strong></td>
                 <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
             </tr>
         </tfoot>
