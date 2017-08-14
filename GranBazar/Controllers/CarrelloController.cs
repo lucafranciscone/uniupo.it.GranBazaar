@@ -21,26 +21,30 @@ namespace GranBazar.Controllers
 
 
         //dobbiamo mettere le cose in sessione, così non funziona
-        public IActionResult Index(int id)
+        public IActionResult Index(int? id)
         {
-            var query =
-                from x in Context.Prodotto
-                where x.IdProdotto == id
-                select x;
-
-            if (prodottiInCarrello != null)
+            if (id != null)
             {
+                var query =
+                    from x in Context.Prodotto
+                    where x.IdProdotto == id
+                    select x;
 
-                prodottiInCarrello.Add(query.First());
+                var temp = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
+
+                if (temp != null)
+                {
+                    temp.Add(query.First());
+                    HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", temp);
+                }
+                else
+                {
+                    prodottiInCarrello = new List<Prodotto>();
+                    prodottiInCarrello.Add(query.First());
+                    HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", prodottiInCarrello);
+                }
 
             }
-            else {
-
-                prodottiInCarrello = new List<Prodotto>();
-                prodottiInCarrello.Add(query.First());
-            }
-
-            HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", prodottiInCarrello);
            // HttpContext.Session.SetInt32("id",id);
 
             //var t = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
@@ -49,13 +53,19 @@ namespace GranBazar.Controllers
         }
 
        
-        public IActionResult RimuoviProdottoInCarrello(Prodotto p)
+        public IActionResult RimuoviProdotto(int id)
         {
-            if (p != null)
-            {
-                prodottiInCarrello.Remove(p);
-            }
-            return View(p);
+            var query =
+                from x in Context.Prodotto
+                where x.IdProdotto == id
+                select x;
+
+            var temp = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
+
+            temp.Remove(query.First());
+            HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", temp);
+
+            return Redirect("/Carrello/Index");
         }
 
 
