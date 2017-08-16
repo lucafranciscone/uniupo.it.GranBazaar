@@ -11,8 +11,8 @@ namespace GranBazar.Models
      * */
 
 
-    [Table("OrdineProdotto")]
-    public partial class OrdineProdotto
+    [Table("Ordine_Prodotto")]
+    public partial class Ordine_Prodotto
     {
 
         public int IdOrdine { get; set; }

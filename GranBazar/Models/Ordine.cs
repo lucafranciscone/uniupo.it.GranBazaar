@@ -10,7 +10,7 @@ namespace GranBazar.Models
     {
         public Ordine()
         {
-            OrdineProdotto = new HashSet<OrdineProdotto>();
+            Ordine_Prodotto = new HashSet<Ordine_Prodotto>();
         }
 
         [Key]
@@ -20,7 +20,7 @@ namespace GranBazar.Models
         public DateTime? DataSpedizione { get; set; }
         public string Email { get; set; }
 
-        public virtual ICollection<OrdineProdotto> OrdineProdotto { get; set; }
+        public virtual ICollection<Ordine_Prodotto> Ordine_Prodotto { get; set; }
         public virtual Utente EmailNavigation { get; set; }
     }
 }

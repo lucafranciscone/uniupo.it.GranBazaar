@@ -10,7 +10,7 @@ namespace GranBazar.Models
     {
         public Prodotto()
         {
-            OrdineProdotto = new HashSet<OrdineProdotto>();
+            OrdineProdotto = new HashSet<Ordine_Prodotto>();
         }
 
         [Key]
@@ -22,6 +22,6 @@ namespace GranBazar.Models
         public string LinkImmagine { get; set; }
         public bool Disponibile { get; set; }
 
-        public virtual ICollection<OrdineProdotto> OrdineProdotto { get; set; }
+        public virtual ICollection<Ordine_Prodotto> OrdineProdotto { get; set; }
     }
 }
