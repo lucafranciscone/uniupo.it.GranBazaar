@@ -4,6 +4,7 @@
 @{ 
     ViewBag.Title = "Carrello";
     var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("prodottiCarrello");
+    var listaQuantita = HttpContextAccessor.HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
     decimal tot = 0;
 }
 
@@ -21,39 +22,45 @@
         </thead>
 
         <tbody>
-            @foreach (var product in listaProdotti){
-            <tr>
-                <td data-th="Product">
-                    <div class="row">
-                        <div class="col-sm-2 hidden-xs"><img src="@product.LinkImmagine" alt="..." class="img-responsive" /></div>
-                        <div class="col-sm-10">
-                            <h4 class="nomargin">@product.NomeProdotto</h4>
-                            <p>@product.DescrizioneProdotto</p>
-                        </div>
-                    </div>
-                </td>
-                <td data-th="Price">&euro; @product.Prezzo</td>
-                <td style="color:red"> @if (product.Sconto > 0)
-                {<p>&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto),2)) (@product.Sconto%)</p>}</td>
-                <td data-th="Quantity">
-                    <input type="number" class="form-control text-center" value="1" min="1">
-                </td>
-                <td data-th="Subtotal" class="text-center">@if (product.Sconto > 0)
-                { <p>&euro; @(Math.Round((Decimal)(product.Prezzo - product.Prezzo / 100 * product.Sconto), 2))</p>
-                    tot += Math.Round((Decimal)(product.Prezzo - product.Prezzo / 100 * product.Sconto), 2);
-                }
-                else
-                {<p>&euro; @product.Prezzo</p>
-                    tot += product.Prezzo;
-                } 
+            @foreach (var product in listaProdotti.Select((value, i) => new {i, value })) {
+                
+                <form method="get" action="/Carrello/AggiornaCarrello">
+                    <tr>
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-2 hidden-xs"><img src="@product.value.LinkImmagine" alt="..." class="img-responsive" /></div>
+                                <div class="col-sm-10">
+                                    <h4 class="nomargin">@product.value.NomeProdotto</h4>
+                                    <p>@product.value.DescrizioneProdotto</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Price">&euro; @product.value.Prezzo</td>
+                        <td style="color:red">
+                            @if (product.value.Sconto > 0)
+                {<p>&euro; @(Math.Round((Decimal)(product.value.Prezzo / 100 * product.value.Sconto), 2)) (@product.value.Sconto%)</p>}
+                        </td>
+                        <td data-th="Quantity">
+                            <input type="number" class="form-control text-center" value="@listaQuantita[product.i]" min="1" name="quantita" id="quantita">
+                            <input type="hidden" value="@product.value.IdProdotto" name="idProdotto" id="idProdotto"/>
+                        </td>
+                        <td data-th="Subtotal" class="text-center">
+                            @if (product.value.Sconto > 0)
+                { <p>&euro; @(Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2)* listaQuantita[product.i])</p>
+                                tot += (Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2))* listaQuantita[product.i];
+                            }
+                            else
+                            {<p>&euro; @(product.value.Prezzo * listaQuantita[product.i])</p>
+                                tot += (product.value.Prezzo* listaQuantita[product.i]);
+                            }
                     </td>
-                <td class="actions" data-th="">
-                    <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                   <!--da ingrandire l'icona-->
-                    <a href="/Carrello/RimuoviProdotto?id=@product.IdProdotto" class="btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
-                </td>
-            </tr>}
-            
+                    <td class="actions" data-th="">
+                        <button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button>
+                        <!--da ingrandire l'icona-->
+                        <a href="/Carrello/RimuoviProdotto?id=@product.value.IdProdotto" class="btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            </form>}
         </tbody>
         <tfoot>
             <tr>
