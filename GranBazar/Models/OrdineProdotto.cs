@@ -5,6 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GranBazar.Models
 {
+    /*
+     * La classe rappresenta la relazione n-n tra Ordine e Prodotto, l'abbiamo trasformata in un model a se stante. 
+     * 
+     * */
+
+
     [Table("OrdineProdotto")]
     public partial class OrdineProdotto
     {
@@ -13,7 +19,7 @@ namespace GranBazar.Models
         public int IdProdotto { get; set; }
         public int Quantita { get; set; }
 
-        public virtual Ordine IdOrdineNavigation { get; set; }
-        public virtual Prodotto IdProdottoNavigation { get; set; }
+        public virtual Ordine IdOrdineNavigation { get; set; }//<-- Sono corretti?
+        public virtual Prodotto IdProdottoNavigation { get; set; }//<-- Sono corretti?
     }
 }

@@ -8,19 +8,26 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using GranBazar.Models;
 using GranBazar.Data;
+using Microsoft.AspNetCore.Http;
+using GranBazar.Src;
 
 namespace GranBazar.Controllers
 {
     public class AccountController : Controller
     {
+       
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
-
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        readonly BazarContext context;
+        
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, BazarContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.context = context;
         }
+
+      
 
         public IActionResult Register() => View();
 
@@ -41,7 +48,14 @@ namespace GranBazar.Controllers
 
             var userCreationResult = await userManager.CreateAsync(newUser, password);
 
-            //query.insertUser(email, password);
+            context.Utente.Add(new Utente
+            {
+                Email = email,
+                Psw = password,
+                Ruolo = "User"
+            });
+
+            context.SaveChanges();
 
             if (!userCreationResult.Succeeded)
             {
@@ -74,13 +88,31 @@ namespace GranBazar.Controllers
                     return View();
                 }
 
+                HttpContext.Session.SetString("utenteLoggato", email);
+                string y = HttpContext.Session.GetString("utenteLoggato");
+                // Query query = new Query(context);
+                var query =
+                 from x in context.Utente
+                 where x.Email.Equals(email)
+                 select x.Ruolo;
                 //e' una prova, se è un Admin viene rindirizzato da una parte, altrimenti da un altra
-                var ruolo = "Admin";//query.getRuleByEmail(email);
+                var ruolo = query.First();
 
-                System.Console.WriteLine($"Il ruolo e: {ruolo}");
-                if (ruolo.Equals("Admin"))
-                    return Redirect(Url.Action("Index", "Prodotti"));
-                else return Redirect(Url.Action("Index", "User"));
+                //string url = HttpContext.Request.Query["url"];
+
+
+                //System.Console.WriteLine($"L'URL é : {url}");
+
+                /*
+
+
+                 System.Console.WriteLine($"Il ruolo e: {ruolo}");
+                 if (ruolo.Equals("Admin"))
+                     return Redirect(Url.Action("Index", "Prodotti"));
+                 else return Redirect(Url.Action("Index", "User"));
+                 */
+                return Redirect(Url.Action("Index", "Checkout"));
+                
             }
             catch (Exception e)
             {
@@ -91,6 +123,7 @@ namespace GranBazar.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
+            HttpContext.Session.Clear();            //toglie tutti gli oggetti in sessione
             return Redirect("~/");
         }
 

@@ -1677,11 +1677,13 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
+    <PackageReference Include="T4WebFormsInjection" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Carrello\" />
+    <Folder Include="Views\Checkout\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
 

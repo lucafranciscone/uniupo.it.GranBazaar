@@ -7,6 +7,7 @@ using System.Text;
 using GranBazar.Data;
 using GranBazar.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace GranBazar.Controllers
 {
@@ -20,6 +21,8 @@ namespace GranBazar.Controllers
             Context = context;
             Logger = logger;
         }
+
+     
 
         public IActionResult Index()
         {

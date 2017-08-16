@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using GranBazar.Models;
 
-namespace GranBazar.Models
+namespace GranBazar.Data
 {
     public partial class BazarContext : DbContext
     {

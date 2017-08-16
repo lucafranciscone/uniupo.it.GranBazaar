@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using GranBazar.Models;
 using Microsoft.AspNetCore.Http;
 using GranBazar.Src;
+using GranBazar.Data;
 
 namespace GranBazar.Controllers
 {
