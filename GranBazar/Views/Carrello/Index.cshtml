@@ -24,9 +24,8 @@
 
         <tbody>@if (listaProdotti != null)
         {
-            @foreach (var product in listaProdotti.Select((value, i) => new { i, value }))
-            {
-                @(elementi = true)
+            @foreach (var product in listaProdotti.Select((value, i) => new { i, value })){
+                <p style="visibility:hidden">@(elementi = true)</p>
                 <form method="get" action="/Carrello/AggiornaCarrello">
                     <tr>
                         <td data-th="Product">

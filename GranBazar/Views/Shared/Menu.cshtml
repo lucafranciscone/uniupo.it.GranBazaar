@@ -1,4 +1,14 @@
-﻿<nav class="navbar navbar-default navbar-fixed-top">
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("prodottiCarrello");
+    var listaQuantita = HttpContextAccessor.HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.GetString("utenteLoggato");
+    var numeroDiElementiInCarrello = HttpContextAccessor.HttpContext.Session.GetInt32("numeroElementiInCarrello");
+}
+
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -8,18 +18,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Menù</a>
+            <a class="navbar-brand" href="/">Home Page</a>
+
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Login", "Login", "Account")</li> 
-                <li><a href="#">Catalogo Prodotti</a></li>
+                <li><a href="#">Ordini</a></li>
+                @if (utenteLoggato != null){
+                <li>@Html.ActionLink("Area Riservata", "Index", "User")</li> }
             </ul>
        
             <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="  search-query form-control" placeholder="Search" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class=" glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </form>
          <!--
@@ -38,9 +57,11 @@
             </div>
             -->
             <ul class="nav navbar-nav navbar-right">
-                <li>@ViewData["numberProductsInCart"]</li>
+                <li>@numeroDiElementiInCarrello</li>
                 <li>@Html.ActionLink("Carrello", "Index", "Carrello")</li> 
-                <li><a href="#">Ordini</a></li>
+                @if (utenteLoggato == null || utenteLoggato.Equals(""))
+                {<li>@Html.ActionLink("Login", "Login", "Account")</li> }
+                else{<li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

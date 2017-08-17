@@ -32,9 +32,11 @@
                     <hr>
                     @if (Model.Disponibile){
                     <div class="btn-group cart">
-                        <button type="button" class="btn btn-success">
-                            Aggiungi al carrello
-                        </button>
+                        <a href="/Carrello/Index?id=@Model.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
+                    </div>}
+                    else{
+                    <div class="btn-group cart">
+                        <a class="btn btn-danger">Non Disponibile</a>
                     </div>}
                 </div>
             </div>

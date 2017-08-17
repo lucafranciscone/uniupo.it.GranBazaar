@@ -109,7 +109,7 @@ namespace GranBazar.Controllers
                      return Redirect(Url.Action("Index", "Prodotti"));
                  else return Redirect(Url.Action("Index", "User"));
                  */
-                return Redirect(Url.Action("Index", "Checkout"));
+                return Redirect(Url.Action("Index", "Home"));
 
             }
             catch (Exception e)
