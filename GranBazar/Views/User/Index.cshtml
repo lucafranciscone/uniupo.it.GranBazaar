@@ -1,35 +1,152 @@
+@using GranBazar.Models
+
 @{
     ViewBag.Title = "Dashboard User";
     Layout = "_Layout";
-    var numeroOrdini = (int)TempData["numeroOrdini"];
+    var numeroOrdini = ViewData["numeroOrdini"];
+    //var elencoOrdini = (List<VistaProdottoOrdine>) ViewData["elencoOrdini"];
+    var elencoOrdini = (IQueryable<VistaProdottoOrdine>)ViewData["elencoOrdini"];
+    int position = 0;
+
+
+    var listaId = elencoOrdini
+        .Select(x => new { x.IdOrdine })
+        .Distinct();
 }
 
 <div class="container">
-    @for (int i = 0; i < numeroOrdini; i++){
+
+    @foreach (var x in listaId)
+        {
+            var riga =
+                   from y in elencoOrdini
+                   where x.IdOrdine.Equals(y.IdOrdine)
+                   select new VistaProdottoOrdine
+                   {
+                       IdOrdine = y.IdOrdine,
+                       IdProdotto = y.IdProdotto,
+                       NomeProdotto = y.NomeProdotto,
+                       DescrizioneProdotto = y.DescrizioneProdotto,
+                       Quantita = y.Quantita,
+                       LinkImmagine = y.LinkImmagine,
+                       Prezzo = y.Prezzo,
+                       Sconto = y.Sconto,
+                       DataOrdine = y.DataOrdine,
+                       Stato = y.Stato,
+                       DataSpedizione = y.DataSpedizione
+                   };
+            List<VistaProdottoOrdine> vp = riga.ToList();
+
+         <div class="panel panel-default">
+             <div class="panel-heading">Ordine effettuato il 6 agosto <span>Totale<bold>&euro; 100</bold></span></div>
+              <!--griglia-->
+             <div class="panel-body">
+                 <!-- TREEVIEW CODE -->
+                 <ul class="treeview">
+                     <li>
+                         <a href="#">Contenuto Ordine</a>
+
+                         @foreach(VistaProdottoOrdine y in vp)
+                         {
+                            <!--incollare qui html contenuto riga-->
+                            <ul>
+                                <li>
+                                    <div class="container" style="margin-top:50px;">
+                                        <table id="cart" class="table table-hover table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:50%">Prodotto</th><!-- 40-->
+                                                    <th style="width:10%">Prezzo</th><!--10-->
+                                                    <th style="width:10%">Sconto</th><!-- 15-->
+                                                    <th style="width:10%">Quantita'</th><!-- 8-->
+                                                    <th style="width:10%" class="text-center">Subtotale</th><!-- 17-->
+                                                    <th style="width:10%"></th><!-- 10-->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <form method="get" action="/Carrello/AggiornaCarrello">
+                                                    <tr>
+                                                        <td data-th="Product">
+                                                            <div class="row">
+                                                                <div class="col-sm-2 hidden-xs"><img src="#" alt="..." class="img-responsive" /></div>
+                                                                <div class="col-sm-10">
+                                                                    <a href="#" style="font-size:16px"> @y.NomeProdotto</a>
+                                                                    <p> @y.DescrizioneProdotto</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td data-th="Price">&euro; @y.Prezzo</td>
+                                                        <td style="color:red"> @y.Sconto </td>
+                                                        <td data-th="Quantity">
+                                                            <input type="number" class="form-control text-center" value="@y.Quantita" min="1" name="quantita" id="quantita">
+                                                        </td>
+                                                        <td data-th="Subtotal" class="text-center">
+                                                            1
+                                                        </td>
+
+                                                    </tr>
+                                                </form>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+
+                                                    <td colspan="3" class="hidden-xs"></td>
+                                                    <td class="hidden-xs text-center"><strong>Totale &euro; totale</strong></td>
+
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </li>
+
+                            </ul>
+                         }
+
+
+                         <!--foerach-->
+
+
+
+
+        )
+
+
+
+            
+
+                    </li>
+                </ul>
+             </div>
+         </diV>}<!--chiuso forach-->
+</div><!--container-->
+
+<!--
+
+
+
     <div class="panel panel-default">
+
         <div class="panel-heading">Ordine effettuato il 6 agosto <span>Totale<bold>&euro; 100</bold></span></div>
-        <!--griglia-->
+
         <div class="panel-body">
-            <!-- TREEVIEW CODE -->
+      
             <ul class="treeview">
+
                 <li>
                     <a href="#">Contenuto Ordine</a>
-                    <!--Inizio griglia-->
 
-
-                    <!--Fine griglia-->
                     <ul>
                         <li>
                             <div class="container" style="margin-top:50px;">
                                 <table id="cart" class="table table-hover table-condensed">
                                     <thead>
                                         <tr>
-                                            <th style="width:50%">Prodotto</th><!-- 40-->
-                                            <th style="width:10%">Prezzo</th><!--10-->
-                                            <th style="width:10%">Sconto</th><!-- 15-->
-                                            <th style="width:10%">Quantita'</th><!-- 8-->
-                                            <th style="width:10%" class="text-center">Subtotale</th><!-- 17-->
-                                            <th style="width:10%"></th><!-- 10-->
+                                            <th style="width:50%">Prodotto</th><!--
+                                            <th style="width:10%">Prezzo</th><!--1
+                                            <th style="width:10%">Sconto</th><!-- 1
+                                            <th style="width:10%">Quantita'</th><!-- 8
+                                            <th style="width:10%" class="text-center">Subtotale</th><!-- 1
+                                            <th style="width:10%"></th><!-- 10
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -70,10 +187,10 @@
                     </ul>
                 </li>
             </ul>
-            <!-- TREEVIEW CODE -->
+            <!-- TREEVIEW CODE 
         </div>
     </div>}
-</div>
+</div>-->
 <script>
     $.fn.extend({
         treeview: function () {
