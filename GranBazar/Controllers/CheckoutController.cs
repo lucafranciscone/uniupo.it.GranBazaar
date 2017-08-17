@@ -37,14 +37,28 @@ namespace GranBazar.Controllers
                 select x;
 
             //funziona
-            var ordine = context.Ordine.Add(new Ordine
+
+            var ordine = new Ordine
             {
                 Email = utenteLoggato,
                 Stato = "Spedito",
                 DataOrdine = DateTime.Now,
-                EmailNavigation = tmpUtente.First()
-            });
+            };
 
+            foreach (var x in tempProdottiInCarrello.Select((value, i) => new { i, value }))
+            {
+                ordine.OrdineProdotto.Add(new OrdineProdotto
+                {
+                    IdProdotto = x.value.IdProdotto,
+                    Quantita = tempQta[x.i],
+                });
+            }
+              
+            
+
+
+
+     
             context.SaveChanges();
 
 
@@ -53,7 +67,7 @@ namespace GranBazar.Controllers
              *Microsoft.EntityFrameworkCore.DbUpdateException: 'An error occurred while updating the entries. See the inner exception for details.'
              Inner Exception
              SqlException: Il nome di oggetto 'OrdineProdotto' non è valido.
-             **/
+             
 
             OrdineProdotto ordineProdotto = new OrdineProdotto();
             foreach (var x in tempProdottiInCarrello.Select((value, i) => new { i, value }))
@@ -68,7 +82,7 @@ namespace GranBazar.Controllers
                 context.OrdineProdotto.Add(ordineProdotto);
             }
             context.SaveChanges();//<-- punto in cui fallisce
-
+            **/
             return View();
         }
     }

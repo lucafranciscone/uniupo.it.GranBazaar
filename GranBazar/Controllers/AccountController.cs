@@ -15,11 +15,11 @@ namespace GranBazar.Controllers
 {
     public class AccountController : Controller
     {
-       
+
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
         readonly BazarContext context;
-        
+
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, BazarContext context)
         {
             this.userManager = userManager;
@@ -27,7 +27,7 @@ namespace GranBazar.Controllers
             this.context = context;
         }
 
-      
+
 
         public IActionResult Register() => View();
 
@@ -104,15 +104,13 @@ namespace GranBazar.Controllers
                 //System.Console.WriteLine($"L'URL é : {url}");
 
                 /*
-
-
                  System.Console.WriteLine($"Il ruolo e: {ruolo}");
                  if (ruolo.Equals("Admin"))
                      return Redirect(Url.Action("Index", "Prodotti"));
                  else return Redirect(Url.Action("Index", "User"));
                  */
                 return Redirect(Url.Action("Index", "Checkout"));
-                
+
             }
             catch (Exception e)
             {

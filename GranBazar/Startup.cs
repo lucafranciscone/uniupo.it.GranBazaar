@@ -58,6 +58,8 @@ namespace GranBazar
 
             services.AddMvc();
 
+
+
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
 
@@ -88,6 +90,7 @@ namespace GranBazar
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
+            
            
             //handler globale
             app.Run(async (context) =>
