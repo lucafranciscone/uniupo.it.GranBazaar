@@ -19,10 +19,11 @@ namespace GranBazar.Controllers
         {
             this.context = context;
         }
+
         public IActionResult Index()
         {
-
             string utenteLoggato = HttpContext.Session.GetString("utenteLoggato");
+
             var elencoOrdini =
                 from x in context.Ordine
                 join e in context.Ordine_Prodotto 
@@ -43,48 +44,40 @@ namespace GranBazar.Controllers
                     Stato = x.Stato,
                     DataSpedizione = x.DataSpedizione
                 };
-            /*
-            var listaId = elencoOrdini
+
+            var elencoId = elencoOrdini
                 .Select(x => new { x.IdOrdine })
                 .Distinct();
 
+            //converto elencoOrdini in lista
+            var elencoOrdiniInFormatoLista = elencoOrdini.ToList();
 
-            Dictionary <int, List<VistaProdottoOrdine>> listaProdotti = new Dictionary<int, List<VistaProdottoOrdine>>();
+            //converto listaId in lista
+            var elencoIdInFormatoLista = elencoId.ToList();
 
+
+            Dictionary <int, List<VistaProdottoOrdine>> elencoIdOrdiniConAssociatoElencoProdotti = new Dictionary<int, List<VistaProdottoOrdine>>();
+
+            //dichiaro una lista temporanea che conterrà l'elenco prodotti per un singolo id ordine
             List<VistaProdottoOrdine> listaTmp = new List<VistaProdottoOrdine>();
 
-            int ordId = 0;
+            int ordineIdPerHash = 0;
 
-            /*
-            foreach(var x in listaId.Select((value, i) => new { i, value }))
+            for (int i=0 ; i<elencoIdInFormatoLista.Count() ;i++)
             {
                 listaTmp = new List<VistaProdottoOrdine>();
-
-                foreach (var y in listaId.Select((value, i) => new { i, value }))
+                for (int j = 0; j< elencoOrdiniInFormatoLista.Count();j++)
                 {
-                    if(y.value.IdOrdine == x
-                }
-            }
-            /*
-                    for (int i=0 ; i<listaId.Count() ;i++)
-            {
-                listaTmp = new List<VistaProdottoOrdine>();
-                for (int j = 0; j< elencoOrdini.Count();j++)
-                {
-                    if(elencoOrdini.ElementAt(j).IdOrdine == listaId.ElementAt(i).IdOrdine)
+                    if(elencoOrdiniInFormatoLista.ElementAt(j).IdOrdine == elencoIdInFormatoLista.ElementAt(i).IdOrdine)
                     {
-                        listaTmp.Add(elencoOrdini.ElementAt(i));
-                        ordId = listaId.ElementAt(j).IdOrdine;
+                        listaTmp.Add(elencoOrdiniInFormatoLista.ElementAt(j));
+                        ordineIdPerHash = elencoIdInFormatoLista.ElementAt(i).IdOrdine;
                     }
                 }
-                listaProdotti.Add(ordId, listaTmp);
+                elencoIdOrdiniConAssociatoElencoProdotti.Add(ordineIdPerHash, listaTmp);
             }
-            */
 
-      
- 
-            ViewData["elencoOrdini"] = elencoOrdini;
-           // ViewData["numeroOrdini"] = listaId;
+            ViewData["elencoOrdini"] = elencoIdOrdiniConAssociatoElencoProdotti;
 
             return View();
         }

@@ -31,12 +31,6 @@ namespace GranBazar.Controllers
                 from x in Context.Prodotto
                 select x;
 
-
-            //è un esempio di come mettere i dati e visualizzarli in html
-            // ViewData["numberProductsInCart"] = query.getumberProductsInCart();
-            foreach (var x in query)
-                System.Console.WriteLine(x);
-
             return View(query.ToList());
         }
 
