@@ -26,8 +26,6 @@ namespace GranBazar.Controllers
 
         protected override Func<Prodotto, int, bool> FilterById => (e, id) => e.IdProdotto == id;
 
-        // public override Task<IActionResult> Delete(int IdProdotto) =>base.Delete(IdProdotto);
-
         public IActionResult SchedaProdotto(int id)
         {
             var query = 

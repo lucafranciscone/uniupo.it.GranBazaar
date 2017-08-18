@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using GranBazar.Dto;
 using GranBazar.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GranBazar.Controllers
 {
@@ -33,9 +34,8 @@ namespace GranBazar.Controllers
             Logger = logger;
         }
 
+        
         //public IActionResult CatalogoProdotti() => View();
-
-       
 
         [HttpGet]
         public virtual async Task<IActionResult> Read()

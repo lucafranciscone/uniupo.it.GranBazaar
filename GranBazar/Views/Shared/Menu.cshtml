@@ -32,42 +32,48 @@
                         <li>@Html.ActionLink("Elenco ordini", "ElencoOrdini", "Admin")</li>
                         <li>@Html.ActionLink("Catalogo prodotti", "CatalogoProdotti", "Prodotti")</li>}}
             </ul>
-       
-            <form class="navbar-form navbar-left">
-                <div id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" class="  search-query form-control" placeholder="Search" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class=" glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </form>
-         <!--
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-8 col-xs-offset-2">
-                        <div class="input-group">
-                            <input type="hidden" name="search_param" value="all" id="search_param">
-                            <input type="text" class="form-control" name="x" placeholder="Cerca..">
+
+
+        
+
+                <form class="navbar-form navbar-left" method="get" action="/Ricerca/Index">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="search-query form-control" placeholder="Search" name="search" id="search" />
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                <button class="btn btn-default" type="submit">
+                                    <span class=" glyphicon glyphicon-search"></span>
+                                </button>
                             </span>
                         </div>
                     </div>
-                </div>
-            </div>
-            -->
-            <ul class="nav navbar-nav navbar-right">
-                <li>@numeroDiElementiInCarrello</li>
-                <li>@Html.ActionLink("Carrello", "Index", "Carrello")</li> 
-                @if (utenteLoggato == null || utenteLoggato.Equals(""))
-                {<li>@Html.ActionLink("Login", "Login", "Account", new { url = Context.Request.Path + Context.Request.QueryString })</li> }
-                else{<li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
-            </ul>
-        </div><!-- /.navbar-collapse -->
+                </form>
+                <!--
+           <div class="container-fluid">
+               <div class="row">
+                   <div class="col-xs-8 col-xs-offset-2">
+                       <div class="input-group">
+                           <input type="hidden" name="search_param" value="all" id="search_param">
+                           <input type="text" class="form-control" name="x" placeholder="Cerca..">
+                           <span class="input-group-btn">
+                               <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                           </span>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@numeroDiElementiInCarrello</li>
+                    <li>@Html.ActionLink("Carrello", "Index", "Carrello")</li>
+                    @if (utenteLoggato == null || utenteLoggato.Equals(""))
+                    {
+                <li>@Html.ActionLink("Login", "Login", "Account", new { url = Context.Request.Path + Context.Request.QueryString })</li> }
+                    else
+                    {
+                <li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
+                </ul>
+</div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 

@@ -328,6 +328,9 @@ namespace GranBazar.GridTagHelpers
     {
         Number,
         String,
+        Boolean,
+        Decimal,
+        Byte,
         Date
     }
 
