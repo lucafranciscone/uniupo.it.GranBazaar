@@ -69,10 +69,12 @@ namespace GranBazar.Controllers
                     HttpContext.Session.Set<List<int>>("quantitaPerProdotto", quantitaPerProdotto);
                 }
             }
-
-            foreach (var x in HttpContext.Session.Get<List<int>>("quantitaPerProdotto"))
-                count += x;
-            HttpContext.Session.SetInt32("numeroElementiInCarrello", count);
+            if (HttpContext.Session.Get<List<int>>("quantitaPerProdotto") != null)
+            {
+                foreach (var x in HttpContext.Session.Get<List<int>>("quantitaPerProdotto"))
+                    count += x;
+                HttpContext.Session.SetInt32("numeroElementiInCarrello", count);
+            }
 
             return View();
         }

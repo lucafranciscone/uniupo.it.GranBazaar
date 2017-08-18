@@ -1696,4 +1696,12 @@
   </ItemGroup>
 
 
+
+  <ItemGroup>
+    <Content Update="Views\Prodotti\CatalogoProdotti.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
 </Project>

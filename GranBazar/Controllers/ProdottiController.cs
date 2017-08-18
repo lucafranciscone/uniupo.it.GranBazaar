@@ -15,17 +15,16 @@ using Microsoft.AspNetCore.Authorization;
 namespace GranBazar.Controllers
 {
 
-    public class ProdottiController : Controller
+    public class ProdottiController : CrudController<BazarContext, int, Prodotto>
     {
-
         BazarContext Context;
-        public ProdottiController(BazarContext context, ILogger<ProdottiController> logger)  {
+        public ProdottiController(BazarContext context, ILogger<ProdottiController> logger) : base(context, logger) {
             Context = context;
         }
 
-        //protected override DbSet<Prodotto> Entities => Context.Prodotto;
+        protected override DbSet<Prodotto> Entities => Context.Prodotto;
 
-        //protected override Func<Prodotto, int, bool> FilterById => (e, id) => e.IdProdotto == id;
+        protected override Func<Prodotto, int, bool> FilterById => (e, id) => e.IdProdotto == id;
 
         // public override Task<IActionResult> Delete(int IdProdotto) =>base.Delete(IdProdotto);
 
@@ -39,6 +38,7 @@ namespace GranBazar.Controllers
             return View(query.First());
         }
 
-        public IActionResult Index() => View();
+        [Authorize]
+        public IActionResult CatalogoProdotti() => View();
     }
 }

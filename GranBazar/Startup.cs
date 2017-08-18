@@ -65,9 +65,7 @@ namespace GranBazar
 
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
                 options.IdleTimeout = TimeSpan.FromSeconds(600);
-                options.CookieHttpOnly = true;
             });
 
         }
@@ -98,10 +96,6 @@ namespace GranBazar
                 await context.Response.WriteAsync("Hello World!");
                 
             });
-
-
-
-     
 
         }
     }

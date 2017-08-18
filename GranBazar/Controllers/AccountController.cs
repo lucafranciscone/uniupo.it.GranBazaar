@@ -27,8 +27,6 @@ namespace GranBazar.Controllers
             this.context = context;
         }
 
-
-
         public IActionResult Register() => View();
 
         [HttpPost]
@@ -70,10 +68,12 @@ namespace GranBazar.Controllers
         public IActionResult Login() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password, bool rememberMe)
+        public async Task<IActionResult> Login(string email, string password, bool rememberMe, string url)
         {
             try
             {
+                var path = url;
+
                 var user = await userManager.FindByEmailAsync(email);
                 if (user == null)
                 {
@@ -88,28 +88,14 @@ namespace GranBazar.Controllers
                     return View();
                 }
 
-                HttpContext.Session.SetString("utenteLoggato", email);
-                string y = HttpContext.Session.GetString("utenteLoggato");
-                // Query query = new Query(context);
-                var query =
-                 from x in context.Utente
-                 where x.Email.Equals(email)
-                 select x.Ruolo;
-                //e' una prova, se è un Admin viene rindirizzato da una parte, altrimenti da un altra
-                var ruolo = query.First();
+                var utente =
+                     from x in context.Utente
+                     where x.Email.Equals(email)
+                     select x;
 
-                //string url = HttpContext.Request.Query["url"];
+                HttpContext.Session.Set<Utente>("utenteLoggato",(Utente) utente.Single());
 
-
-                //System.Console.WriteLine($"L'URL é : {url}");
-
-                /*
-                 System.Console.WriteLine($"Il ruolo e: {ruolo}");
-                 if (ruolo.Equals("Admin"))
-                     return Redirect(Url.Action("Index", "Prodotti"));
-                 else return Redirect(Url.Action("Index", "User"));
-                 */
-                return Redirect(Url.Action("Index", "Home"));
+                return Redirect(url);
 
             }
             catch (Exception e)
@@ -124,6 +110,8 @@ namespace GranBazar.Controllers
             HttpContext.Session.Clear();            //toglie tutti gli oggetti in sessione
             return Redirect("~/");
         }
+
+    
 
     }
 }

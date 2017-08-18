@@ -33,8 +33,9 @@ namespace GranBazar.Controllers
             Logger = logger;
         }
 
-        public virtual IActionResult Index() => View(); 
+        //public IActionResult CatalogoProdotti() => View();
 
+       
 
         [HttpGet]
         public virtual async Task<IActionResult> Read()

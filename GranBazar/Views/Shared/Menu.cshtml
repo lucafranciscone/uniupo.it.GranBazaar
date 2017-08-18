@@ -4,7 +4,7 @@
 @{
     var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("prodottiCarrello");
     var listaQuantita = HttpContextAccessor.HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
-    var utenteLoggato = HttpContextAccessor.HttpContext.Session.GetString("utenteLoggato");
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
     var numeroDiElementiInCarrello = HttpContextAccessor.HttpContext.Session.GetInt32("numeroElementiInCarrello");
 }
 
@@ -24,9 +24,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Ordini</a></li>
                 @if (utenteLoggato != null){
-                <li>@Html.ActionLink("Area Riservata", "Index", "User")</li> }
+                    @if (utenteLoggato.Ruolo.Equals("User")){
+                        <li>@Html.ActionLink("Area Riservata", "Index", "User")</li>}
+                    else{
+                        <li>@Html.ActionLink("Elenco utenti", "Index", "ElencoUtenti")</li>
+                        <li>@Html.ActionLink("Elenco ordini", "ElencoOrdini", "Admin")</li>
+                        <li>@Html.ActionLink("Catalogo prodotti", "CatalogoProdotti", "Prodotti")</li>}}
             </ul>
        
             <form class="navbar-form navbar-left">
@@ -60,7 +64,7 @@
                 <li>@numeroDiElementiInCarrello</li>
                 <li>@Html.ActionLink("Carrello", "Index", "Carrello")</li> 
                 @if (utenteLoggato == null || utenteLoggato.Equals(""))
-                {<li>@Html.ActionLink("Login", "Login", "Account")</li> }
+                {<li>@Html.ActionLink("Login", "Login", "Account", new { url = Context.Request.Path + Context.Request.QueryString })</li> }
                 else{<li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
             </ul>
         </div><!-- /.navbar-collapse -->

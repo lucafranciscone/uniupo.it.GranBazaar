@@ -29,17 +29,17 @@ namespace GranBazar.Controllers
             var tempQta = HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
             HttpContext.Session.Remove("quantitaPerProdotto");
 
-            var utenteLoggato = HttpContext.Session.GetString("utenteLoggato");
+            var utenteLoggato = HttpContext.Session.Get<Utente>("utenteLoggato");
 
             var tmpUtente =
                 from x in context.Utente
-                where x.Email == utenteLoggato
+                where x.Email == utenteLoggato.Email
                 select x;
             
             //funziona
             var ordine = context.Ordine.Add(new Ordine
             {
-                Email = utenteLoggato,
+                Email = utenteLoggato.Email,
                 Stato = "Spedito",
                 DataOrdine = DateTime.Now,
                 EmailNavigation = tmpUtente.First()
@@ -50,7 +50,7 @@ namespace GranBazar.Controllers
 
 
            //funziona
-              Ordine_Prodotto ordineProdotto = new Ordine_Prodotto();
+            Ordine_Prodotto ordineProdotto = new Ordine_Prodotto();
            
             foreach (var x in tempProdottiInCarrello.Select((value, i) => new { i, value }))
             {

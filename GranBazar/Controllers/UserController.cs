@@ -22,7 +22,7 @@ namespace GranBazar.Controllers
 
         public IActionResult Index()
         {
-            string utenteLoggato = HttpContext.Session.GetString("utenteLoggato");
+            var utenteLoggato = HttpContext.Session.Get<Utente>("utenteLoggato");
 
             var elencoOrdini =
                 from x in context.Ordine
@@ -30,7 +30,7 @@ namespace GranBazar.Controllers
                 on x.IdOrdine equals e.IdOrdine 
                 join f in context.Prodotto
                 on e.IdProdotto equals f.IdProdotto
-                where x.Email.Equals(utenteLoggato)
+                where x.Email.Equals(utenteLoggato.Email)
                 select new VistaProdottoOrdine{
                     IdOrdine = e.IdOrdine,
                     IdProdotto = e.IdProdotto,
