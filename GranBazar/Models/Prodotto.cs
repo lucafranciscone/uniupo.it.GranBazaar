@@ -20,6 +20,8 @@ namespace GranBazar.Models
         public decimal Prezzo { get; set; }
         public byte? Sconto { get; set; }
         public string LinkImmagine { get; set; }
+        public string LinkImmagineCarosello { get; set; }
+        public string LinkImmagineCarrello { get; set; }
         public bool Disponibile { get; set; }
 
         public virtual ICollection<Ordine_Prodotto> OrdineProdotto { get; set; }

@@ -21,6 +21,7 @@
     <Content Include="wwwroot\bootstrap\jquery-slim.min.js" />
     <Content Include="wwwroot\bootstrap\jquery.js" />
     <Content Include="wwwroot\default.html" />
+    <Content Include="wwwroot\img\home_dragon_quest.jpg" />
     <Content Include="wwwroot\js\angular.min.js" />
     <Content Include="wwwroot\js\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="wwwroot\js\cultures\kendo.culture.af-ZA.min.js.map" />

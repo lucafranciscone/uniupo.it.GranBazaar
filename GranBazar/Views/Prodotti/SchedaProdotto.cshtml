@@ -14,7 +14,7 @@
                     <div class="product col-md-3 service-image-left">
 
                         <center>
-                            <img id="item-display" src="@Model.LinkImmagine" alt="" style="max-height:150px;"></img>
+                            <img id="item-display" src="~/img/home_dragon_quest.jpg" alt="" style="max-height:150px;"></img>
                         </center>
                     </div>
 
@@ -22,13 +22,14 @@
                 </div>
 
                 <div class="col-md-7">
-                    <div class="product-title">@Model.NomeProdotto</div>
+                    <div class="product-title"><h4>@Model.NomeProdotto</h4></div>
                     <div class="product-desc">@Model.DescrizioneProdotto</div>
                     <hr>
-                    <div class="product-price">€ @Model.Prezzo</div>
-                    <div class="product-price">@if (@Model.Sconto > 0) {@Model.Sconto}</div>
+                    <div class="product-price">Prezzo: € @Model.Prezzo</div>
+                    <div class="product-price">@if (@Model.Sconto > 0)
+                        {<p style="color:red">Risparmi: &euro; @(Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2)) (@Model.Sconto%)<br />Prezzo finale: &euro; @(Model.Prezzo - Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2))</p>}</div>
                     <div class="product-stock">@if (@Model.Disponibile)
-                    {<p style="color:green;">Disponibile</p>} else {<p style="color:red;">Non disponibile</p>} </div>
+                    {<p><h4 style="color:green;">Disponibile</h4"></p>} else {<p><h4 style="color:red;">Non disponibile</h4></p>} </div>
                     <hr>
                     @if (Model.Disponibile){
                     <div class="btn-group cart">

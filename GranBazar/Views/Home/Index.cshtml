@@ -9,13 +9,13 @@
     <!-- Page Content -->
     <div class="container">
         <div class="row">
- 
+
             <div class="col-md-9">
                 <div class="row carousel-holder">
                     <div class="col-md-12">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"</li>
                                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                             </ol>
@@ -42,35 +42,37 @@
                 <div class="row" style="height:517.672px">
                     @foreach (var product in Model)
                     {
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="@product.LinkImmagine" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">€@product.Prezzo</h4>
-                                <h4>
-                                    <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>
-                                </h4>
-                                <p>@product.DescrizioneProdotto</p>
-                            </div>
-                            <br />
-                            @if (product.Disponibile) { 
-                            <div class="btn-group cart">
-
-                                    <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
-
-                            </div>}
-                            else
-                            {
-                                <div class="btn-group cart">
-
-                                    <a href="#" class="btn btn-danger">Non Disponibile</a>
-
-
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                            <div class="thumbnail">
+                                <img src="@product.LinkImmagine" alt="">
+                                <div class="caption">
+                                    <h4 class="pull-right">€@product.Prezzo<br />@if (product.Sconto > 0)
+                                    {<p style="color:red">-&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}</h4>
+                                    <h4>
+                                        <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>
+                                    </h4>
+                                    <p>@product.DescrizioneProdotto</p>
                                 </div>
+                                <br />
+                                @if (product.Disponibile)
+                                {
+                                    <div class="btn-group cart">
 
-                            }
+                                        <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
+
+                                    </div>}
+                                else
+                                {
+                                    <div class="btn-group cart">
+
+                                        <a href="#" class="btn btn-danger">Non Disponibile #puntoarrivo</a>
+
+
+                                    </div>
+
+                                }
+                            </div>
                         </div>
-                    </div>
                     }
 
 
@@ -78,5 +80,6 @@
             </div>
         </div>
     </div>
+
     <!-- /.container -->
 
