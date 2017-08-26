@@ -23,11 +23,26 @@ namespace GranBazar.Controllers
 
         public IActionResult Index()
         {
-            var query =
+            var catalogoProdotti =
                 from x in Context.Prodotto
                 select x;
 
-            return View(query.ToList());
+
+            //devo far ritornare i primi 10 prodotti più acquistati
+            var idProdottiAcquistatiOrdinatiUltimo =
+              (from o in Context.Ordine_Prodotto
+               join p in Context.Prodotto
+                on o.IdProdotto equals p.IdProdotto
+
+               select p).OrderByDescending(n => n.IdProdotto)
+               .Distinct()
+               .Take(10);
+
+            HttpContext.Session.Set<List<Prodotto>>("top10",idProdottiAcquistatiOrdinatiUltimo.ToList());
+
+            return View(catalogoProdotti.ToList());
+
+
         }
     }
 }
