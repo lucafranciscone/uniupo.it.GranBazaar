@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewBag.Title = "CatalogoProdotti";
+    Layout = "_Layout";
+}
+@model List<GranBazar.Models.Prodotto>
+
+<div class="container" style="margin-top:50px;">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:40%">Nome Prodotto</th><!-- 40-->
+                <th style="width:40%">Descrizione</th><!--10-->
+                <th style="width:10%">Disponibile</th><!-- 15-->
+                <th style="width:10%">Aggiorna</th><!-- 15-->
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i=0;i<Model.Count;i++)
+            {
+                <form method="get" action="/Admin/AggiornaDisponibilitaProdotto">
+                    <tr>
+                        <input type="hidden" value="@Model.ElementAt(i).IdProdotto" name="idProdotto" id="idProdotto" />
+                        <td>@Model.ElementAt(i).NomeProdotto</td>
+                        <td>@Model.ElementAt(i).DescrizioneProdotto</td>
+                        @if (@Model.ElementAt(i).Disponibile == true)
+                        {
+
+                            <td>
+                                <select name="stato">
+                                    <option name="true" selected>true</option>
+                                    <option name="false">false</option>
+                                </select>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <select name="stato">
+                                    <option name="true" >true</option>
+                                    <option name="false"selected>false</option>
+                                </select>
+                            </td>
+                        }
+                        <td><button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button></td>
+
+                    </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

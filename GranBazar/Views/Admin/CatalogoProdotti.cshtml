@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+    @{
+        ViewBag.Title = "CatalogoProdotti";
+        Layout = "_Layout";
+    }
+@model List<GranBazar.Models.Prodotto>
+
+    <div class="container" style="margin-top:50px;">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:40%">Nome Prodotto</th><!-- 40--> // descrizione
+                    <th style="width:50%">Descrizione</th><!--10-->
+                    <th style="width:10%">Disponibile</th><!-- 15-->
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var prodotto in Model)
+                {
+                    <sform method="get" action="/Carrello/AggiornaCarrello">
+                        <tr>
+                            <td></td>
+                            <td>@Model.DescrizioneProdotto</td>
+                            <td>@Model.Disponibile</td>
+                        </tr>
+                    </sform>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+

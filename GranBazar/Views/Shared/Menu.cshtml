@@ -28,9 +28,9 @@
                     @if (utenteLoggato.Ruolo.Equals("User")){
                         <li>@Html.ActionLink("Area Riservata", "Index", "User")</li>}
                     else{
-                        <li>@Html.ActionLink("Elenco utenti", "Index", "ElencoUtenti")</li>
+                        <li>@Html.ActionLink("Elenco utenti", "ElencoUtenti", "Admin")</li>
                         <li>@Html.ActionLink("Elenco ordini", "ElencoOrdini", "Admin")</li>
-                        <li>@Html.ActionLink("Catalogo prodotti", "CatalogoProdotti", "Prodotti")</li>}}
+                        <li>@Html.ActionLink("Catalogo prodotti", "AggiornaDisponibilitaProdotto", "Admin")</li>}}
             </ul>
 
 
@@ -82,7 +82,7 @@
 <!--
 <ul id="menu">
     <li>
-        @Html.ActionLink("Login", "Login", "Account")
+       @Html.ActionLink("Login", "Login", "Account")
     </li>
     <li>
         @Html.ActionLink("Courses", "Index", "Courses")
