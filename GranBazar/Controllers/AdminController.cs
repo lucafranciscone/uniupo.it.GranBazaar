@@ -112,9 +112,23 @@ namespace GranBazar.Controllers
         /*l' Elenco degli utenti registrati con possibilità eventuale di cambiare il ruolo. Un utente
         registrato assume di default il ruolo User
          * */
-        public IActionResult ElencoUtenti(int? idProdotto, bool? stato)
+        public IActionResult ElencoUtenti(string email, string ruolo)
         {
-            return View();
+            if(email != null && ruolo != null && (ruolo.Equals("Admin") || ruolo.Equals("User")))
+            {
+                var utenteDaAggiornare =
+                     from user in Context.Utente
+                     where user.Email.Equals(email)
+                     select user;
+                Utente u = utenteDaAggiornare.SingleOrDefault();
+                u.Ruolo = ruolo;
+                Context.SaveChanges();
+            }
+
+            var utente =
+                  from user in Context.Utente
+                  select user;
+            return View(utente.ToList());
 
         }
         /*
