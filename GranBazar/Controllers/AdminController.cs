@@ -37,18 +37,34 @@ namespace GranBazar.Controllers
             return View(catalogoProdotti.ToList());
         }
 
-        // da implementare 
-
-        //http://kerryritter.com/updating-or-replacing-entities-in-entity-framework-6/#comment-202
-        //https://stackoverflow.com/questions/25894587/how-to-update-record-using-entity-framework-6
 
 
-        //arriva 
-        //http://localhost:54575/Admin/AggiornaDisponibilitaProdotto?idProdotto=%3E12&stato=true
-        //dovrebbe arrivare
-        //http://localhost:54575/Admin/AggiornaDisponibilitaProdotto?idProdotto=13&stato=false
-        public IActionResult AggiornaDisponibilitaProdotto(int? idProdotto, bool? stato)
+        /*
+         * Catalogo prodotti: elenco di tutti i prodotti a catalogo (non è obbligatorio implementare
+            l’interfaccia per il caricamento dei prodotti) con possibilità di cambiarne il prezzo,
+            l’eventuale sconto e la disponibilità (sì/no)
+         * */
+
+        //http://localhost:54575/Admin/AggiornaDisponibilitaProdotto?idProdotto=12&stato=true&sconto=10
+        //http://localhost:54575/Admin/AggiornaDisponibilitaProdotto?idProdotto=12&stato=true&sconto=10&prezzo=10.10
+
+        public IActionResult AggiornaDisponibilitaProdotto(int? idProdotto, bool? stato,decimal prezzo,int sconto)
         {
+            //aggiorno il prezzo
+            if(prezzo!=null && idProdotto !=null && prezzo>0)
+            {    
+       
+                //recupero il prodotto da aggiornare
+                var prodottoDaAggiornare =
+                    from prod in Context.Prodotto
+                    where prod.IdProdotto == idProdotto
+                    select prod;
+
+                Prodotto p = prodottoDaAggiornare.SingleOrDefault();
+                p.Prezzo = prezzo;
+                Context.SaveChanges();
+            }
+            
             //IQueryable<Prodotto> catalogoProdotti = null;
 
 
@@ -69,23 +85,53 @@ namespace GranBazar.Controllers
                 p.Disponibile = update;
                 Context.SaveChanges();
 
-                //Ristampo la lista aggiornata
-                var catalogoProdotti =
-                from prod in Context.Prodotto
-                select prod;
-                return View(catalogoProdotti.ToList());
-
             }
-            else
+
+            if(sconto!=null && sconto>0 && idProdotto!=null)
             {
+                //recupero il prodotto da aggiornare
+                var prodottoDaAggiornare =
+                    from prod in Context.Prodotto
+                    where prod.IdProdotto == idProdotto
+                    select prod;
+                Prodotto p = prodottoDaAggiornare.SingleOrDefault();
+                p.Sconto = (byte)sconto;
+                Context.SaveChanges();
+            }
+           
+           
                 var catalogoProdotti =
                 from prod in Context.Prodotto
                 select prod;
                 return View(catalogoProdotti.ToList());
 
-            }
+           
         }
+
+
+        /*l' Elenco degli utenti registrati con possibilità eventuale di cambiare il ruolo. Un utente
+        registrato assume di default il ruolo User
+         * */
+        public IActionResult ElencoUtenti(int? idProdotto, bool? stato)
+        {
+            return View();
+
+        }
+        /*
+         * Elenco degli ordini effettuati con possibilità di cambiare lo stato di un ordine da Sent a
+            Processed. Per ogni ordine deve essere possibile vedere i dettagli (da quale utente è
+            stato fatto, quando, prodotti acquistati, prezzo di acquisto, ...). L’elenco deve essere
+        filtrabile.
+         * 
+         * */
+        public IActionResult ElencoOrdini(int? idProdotto, bool? stato)
+        {
+            return View();
+
+        }
+
     }
+
 
     /*
     public class AdminController : CrudController<BazarContext, string, Utente>
