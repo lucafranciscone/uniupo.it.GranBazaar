@@ -20,5 +20,8 @@ namespace GranBazar.Models
         public decimal Prezzo { get; set; }
         public byte? Sconto { get; set; }
         public string LinkImmagine { get; set; }
+
+        public String Email { get; set; }
+
     }
 }

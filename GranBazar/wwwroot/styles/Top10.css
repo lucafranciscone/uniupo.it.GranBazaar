@@ -1,4 +1,4 @@
-﻿@import url(//fonts.googleapis.com/css?family=Lato:300);
+﻿//@import url(//fonts.googleapis.com/css?family=Lato:300);
 
 * {
     margin: 0;
@@ -13,7 +13,7 @@
     }
 
 body {
-    font-family: Lato, Arial, "Hiragino Kaku Gothic Pro W3", Meiryo, sans-serif;
+    //font-family: Lato, Arial, "Hiragino Kaku Gothic Pro W3", Meiryo, sans-serif;
     background-color: #f1f1f1;
     color: #464646;
     text-align: center;
@@ -51,7 +51,7 @@ article {
     position: relative;
     display: inline-block;
     vertical-align: top;
-    width: calc(33.33% - 4%);
+    width: calc(25.33% - 4%);
     height: 24vw;
     margin: 1.8%;
     -webkit-perspective: 1600px;
@@ -120,7 +120,7 @@ article {
         }
 
         article .item-content p {
-            font-size: 13px;
+            //font-size: 13px;
             margin-bottom: 5%;
             -webkit-transform: translateZ(50px);
             transform: translateZ(50px);

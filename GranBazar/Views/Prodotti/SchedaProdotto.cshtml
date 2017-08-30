@@ -1,28 +1,23 @@
 ﻿@model GranBazar.Models.Prodotto
-
 @{
     ViewBag.Title = @Model.NomeProdotto;
 }
-
-
 
 <div class="container-fluid">
     <div class="content-wrapper">
         <div class="item-container">
             <div class="container">
-                <div class="col-md-12">
+                <div class="product col-md-3 service-image-left">
                     <img id="item-display" src="@Model.LinkImmagine" alt="" />          
                 </div>
 
-                <div class="col-md-7">
-                    <div class="product-title"><h4>@Model.NomeProdotto</h4></div>
+                <div class="col-md-8">
+                    <h4 style="font-size:20px">@Model.NomeProdotto</h4>
                     <div class="product-desc">@Model.DescrizioneProdotto</div>
                     <hr>
                     <div class="product-price">Prezzo: € @Model.Prezzo</div>
                     <div class="product-price">@if (@Model.Sconto > 0)
-                        {<p style="color:red">Risparmi: &euro; @(Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2)) (@Model.Sconto%)<br />Prezzo finale: &euro; @(Model.Prezzo - Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2))</p>}</div>
-                    <div class="product-stock">@if (@Model.Disponibile)
-                    {<p><h4 style="color:green;">Disponibile</h4"></p>} else {<p><h4 style="color:red;">Non disponibile</h4></p>} </div>
+                    {<p style="color:red;font-size:15px">Risparmi: &euro; @(Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2)) (@Model.Sconto%)</p><p style="color:red">Prezzo finale: &euro; @(Model.Prezzo - Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2))</p>}</div>
                     <hr>
                     @if (Model.Disponibile){
                     <div class="btn-group cart">
@@ -37,27 +32,14 @@
         </div>
         <div class="container-fluid">
             <div class="col-md-12 product-info">
-                <ul id="myTab" class="nav nav-tabs nav_tabs">
-
-                    <li class="active"><a href="#service-one" data-toggle="tab">Descrizione</a></li>
-                   
+                <ul class="nav nav-tabs nav_tabs">
+                    <li class="active"><a data-toggle="tab">Descrizione</a></li>
                 </ul>
-                <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade in active" id="service-one">
-
+                <div class="tab-content">
+                    <div class="tab-pane fade in active">
                         <section class="container product-info">
-                            
-                            <h3>@Model.NomeProdotto:</h3>
-                            <p>@Model.DescrizioneProdotto</p></section>
-
-                    </div>
-                    <div class="tab-pane fade" id="service-two">
-
-                        <section class="container"></section>
-
-                    </div>
-                    <div class="tab-pane fade" id="service-three">
-
+                            <h3 style="margin-left:10px;margin-top:0px">@Model.NomeProdotto:</h3>
+                            <p style="margin-left:10px;margin-top:15px">@Model.DescrizioneProdotto</p></section>
                     </div>
                 </div>
                 <hr>

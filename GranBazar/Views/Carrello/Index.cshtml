@@ -1,6 +1,5 @@
 @using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor HttpContextAccessor
-
 @{ 
     ViewBag.Title = "Carrello";
     var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("prodottiCarrello");
@@ -9,69 +8,64 @@
     var elementi = false;
 }
 
-<div class="container" style="margin-top:50px;">
+<div class="container" style="margin-top:20px">
     <table id="cart" class="table table-hover table-condensed">
         <thead>
             <tr>
-                <th style="width:50%">Prodotto</th><!-- 40-->
-                <th style="width:10%">Prezzo</th><!--10-->
-                <th style="width:10%">Sconto</th><!-- 15-->
-                <th style="width:10%">Quantita'</th><!-- 8-->
-                <th style="width:10%" class="text-center">Subtotale</th><!-- 17-->
-                <th style="width:10%"></th><!-- 10-->
+                <th style="width:50%">Prodotto</th>
+                <th style="width:10%">Prezzo</th>
+                <th style="width:10%">Sconto</th>
+                <th style="width:10%">Quantita'</th>
+                <th style="width:10%" class="text-center">Subtotale</th>
+                <th style="width:10%"></th>
             </tr>
         </thead>
 
-        <tbody>@if (listaProdotti != null)
-        {
-            @foreach (var product in listaProdotti.Select((value, i) => new { i, value })){
-                <p style="visibility:hidden">@(elementi = true)</p>
+        <tbody>@if (listaProdotti != null){
+            @foreach (var product in listaProdotti.Select((value, i) => new { i, value })) {
+                <div style="display:none">@(elementi = true)</div>
                 <form method="get" action="/Carrello/AggiornaCarrello">
                     <tr>
-                        <td data-th="Product">
+                        <td>
                             <div class="row">
-                                <div class="col-sm-2 hidden-xs"><img src="@product.value.LinkImmagineCarrello" alt="..." class="img-responsive" /></div>
+                                <div class="col-sm-2 hidden-xs"><img src="@product.value.LinkImmagineCarrello" class="img-responsive"/></div>
                                 <div class="col-sm-10">
                                     <a href="/Prodotti/SchedaProdotto?id=@product.value.IdProdotto" style="font-size:16px">@product.value.NomeProdotto</a>
                                     <p>@product.value.DescrizioneProdotto</p>
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">&euro; @product.value.Prezzo</td>
+                        <td>&euro; @product.value.Prezzo</td>
                         <td style="color:red">
                             @if (product.value.Sconto > 0)
-                {<p>&euro; @(Math.Round((Decimal)(product.value.Prezzo / 100 * product.value.Sconto), 2)) (@product.value.Sconto%)</p>}
+                                {<p style="margin-top:8px;">&euro; @(Math.Round((Decimal)(product.value.Prezzo / 100 * product.value.Sconto), 2)) (@product.value.Sconto%)</p>}
                         </td>
-                        <td data-th="Quantity">
+                        <td>
                             <input type="number" class="form-control text-center" value="@listaQuantita[product.i]" min="1" name="quantita" id="quantita">
                             <input type="hidden" value="@product.value.IdProdotto" name="idProdotto" id="idProdotto"/>
                         </td>
-                        <td data-th="Subtotal" class="text-center">
+                        <td class="text-center">
                             @if (product.value.Sconto > 0)
-                { <p>&euro; @(Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2) * listaQuantita[product.i])</p>
-                                tot += (Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2)) * listaQuantita[product.i];
-                            }
+                                {<p style="margin-top:8px;">&euro; @(Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2) * listaQuantita[product.i])</p>
+                                tot += (Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2)) * listaQuantita[product.i];}
                             else
                             {<p>&euro; @(product.value.Prezzo * listaQuantita[product.i])</p>
-                                tot += (product.value.Prezzo * listaQuantita[product.i]);
-                            }
+                                tot += (product.value.Prezzo * listaQuantita[product.i]);}
                     </td>
-                    <td class="actions" data-th="">
-                        <button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button>
-                        <!--da ingrandire l'icona-->
-                        <a href="/Carrello/RimuoviProdotto?id=@product.value.IdProdotto" class="btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                    <td>
+                        <button class="btn btn-info btn-sm" type="submit" style="margin-left:16px"><i class="fa fa-refresh"></i></button>
+                        <a href="/Carrello/RimuoviProdotto?id=@product.value.IdProdotto" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
                     </td>
                 </tr>
             </form>}}
         </tbody>
         <tfoot>
             <tr>
-                <td><a href="/Home/Index" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continua lo shopping</a></td>
+                <td><a href="/Home/Index" class="btn btn-warning" style="margin-top:15px"><i class="fa fa-angle-left"></i> Continua lo shopping</a></td>
                 <td colspan="3" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Totale &euro; @tot</strong></td>
-                @if (elementi) {<td><a href="/Checkout/Index" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>}
+                <td class="text-center"  style="padding-top:20px"><strong>Totale &euro; @tot</strong></td>
+                @if (elementi) {<td><a href="/Checkout/Index" class="btn btn-success btn-block" style="margin-top:15px">Checkout <i class="fa fa-angle-right"></i></a></td>}
             </tr>
         </tfoot>
     </table>
 </div>
-

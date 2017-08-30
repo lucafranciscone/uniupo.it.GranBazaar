@@ -72,7 +72,7 @@ namespace GranBazar.Controllers
             if (idProdotto!=null && stato!=null)
             {
                 Boolean update = false;
-                if (stato.Equals("true"))
+                if (stato==true)
                 {
                     update = true;
                 }
@@ -140,7 +140,45 @@ namespace GranBazar.Controllers
          * */
         public IActionResult ElencoOrdini(int? idProdotto, bool? stato)
         {
-            return View();
+
+            List<VistaProdottoOrdine> vista = new List<VistaProdottoOrdine>();
+            VistaProdottoOrdine tmpAdd;
+            var idProdottiAcquistatiOrdinatiUltimo =
+              from op in Context.Ordine_Prodotto
+              join p in Context.Prodotto on op.IdProdotto equals p.IdProdotto
+              join o in Context.Ordine on op.IdOrdine equals o.IdOrdine
+              select new
+              {
+                  IdOrdine = op.IdOrdine,            
+                  DataOrdine = o.DataOrdine,
+                  Stato = o.Stato,//sent processed
+                  DataSpedizione = o.DataSpedizione,
+                  Quantita = op.Quantita,
+                  IdProdotto = p.IdProdotto,
+                  NomeProdotto = p.NomeProdotto,
+                  DescrizioneProdotto =p.DescrizioneProdotto,
+                  Prezzo = p.Prezzo,
+                  Sconto = p.Sconto,
+                  Email = o.Email,
+                 
+              };
+
+            foreach(var t in idProdottiAcquistatiOrdinatiUltimo)
+            {
+                tmpAdd = new VistaProdottoOrdine();
+                tmpAdd.IdOrdine = t.IdOrdine;
+                tmpAdd.DataSpedizione = t.DataOrdine;
+                tmpAdd.DataSpedizione = t.DataSpedizione;
+                tmpAdd.Quantita = t.Quantita;
+                tmpAdd.IdProdotto = t.IdProdotto;
+                tmpAdd.NomeProdotto = t.NomeProdotto;
+                tmpAdd.DescrizioneProdotto = t.DescrizioneProdotto;
+                tmpAdd.Prezzo = t.Prezzo;
+                tmpAdd.Sconto = t.Sconto;
+                tmpAdd.Email = t.Email;
+                vista.Add(tmpAdd);
+            }
+            return View(vista);
 
         }
 

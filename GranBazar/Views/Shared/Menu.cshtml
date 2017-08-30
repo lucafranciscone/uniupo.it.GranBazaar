@@ -6,93 +6,46 @@
     var listaQuantita = HttpContextAccessor.HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
     var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
     var numeroDiElementiInCarrello = HttpContextAccessor.HttpContext.Session.GetInt32("numeroElementiInCarrello");
+    string ruolo = "";
+    if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };
 }
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="/">Home Page</a>
-
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                @if (utenteLoggato != null){
-                    @if (utenteLoggato.Ruolo.Equals("User")){
-                        <li>@Html.ActionLink("Area Riservata", "Index", "User")</li>}
-                    else{
-                        <li>@Html.ActionLink("Elenco utenti", "ElencoUtenti", "Admin")</li>
-                        <li>@Html.ActionLink("Elenco ordini", "ElencoOrdini", "Admin")</li>
-                        <li>@Html.ActionLink("Catalogo prodotti", "AggiornaDisponibilitaProdotto", "Admin")</li>}}
+                @if (ruolo.Equals("User")){
+                    <li>@Html.ActionLink("Area Riservata", "Index", "User")</li>}
+                else if (ruolo.Equals("Admin")){
+                    <li>@Html.ActionLink("Elenco utenti", "ElencoUtenti", "Admin")</li>
+                    <li>@Html.ActionLink("Elenco ordini", "ElencoOrdini", "Admin")</li>
+                    <li>@Html.ActionLink("Catalogo prodotti", "AggiornaDisponibilitaProdotto", "Admin")</li>}
             </ul>
 
-
-        
-
-                <form class="navbar-form navbar-left" method="get" action="/Ricerca/Index">
-                    <div id="custom-search-input">
-                        <div class="input-group col-md-12">
-                            <input type="text" class="search-query form-control" placeholder="Search" name="search" id="search" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <span class=" glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-                <!--
-           <div class="container-fluid">
-               <div class="row">
-                   <div class="col-xs-8 col-xs-offset-2">
-                       <div class="input-group">
-                           <input type="hidden" name="search_param" value="all" id="search_param">
-                           <input type="text" class="form-control" name="x" placeholder="Cerca..">
-                           <span class="input-group-btn">
-                               <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                           </span>
-                       </div>
+        <div class="container-fluid">
+            <div class="row">
+                <form class="col-xs-@(ruolo.Equals("User") ? "8" : ruolo.Equals("Admin") ? "5":"9")" style="top:9px;left:24px" method="get" action="/Ricerca/Index">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Cerca.." id="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
                    </div>
-               </div>
-           </div>
-           -->
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@numeroDiElementiInCarrello</li>
+                </form>
+                <ul class="nav navbar-nav navbar-right">   
                     <li>@Html.ActionLink("Carrello", "Index", "Carrello")</li>
-                    @if (utenteLoggato == null || utenteLoggato.Equals(""))
-                    {
-                <li>@Html.ActionLink("Login", "Login", "Account", new { url = Context.Request.Path + Context.Request.QueryString })</li> }
-                    else
-                    {
-                <li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
+                    <!--bisogna migliorare questa parte, renderla più carina
+                    <li style="top:16px;" ><img src="~/img/cart_icon.png" /></li>-->
+                    <li style="top:16px;">@if (numeroDiElementiInCarrello != null) { <div>-> (@numeroDiElementiInCarrello)</div> } </li>
+                    @if (ruolo.Equals("")){<li>@Html.ActionLink("Login", "Login", "Account", new { url = Context.Request.Path + Context.Request.QueryString })</li> }
+                    else{<li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
                 </ul>
-</div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+            </div>
+        </div>   
+        </div>
+    </div>
 </nav>
-
-
-
-<!--
-<ul id="menu">
-    <li>
-       @Html.ActionLink("Login", "Login", "Account")
-    </li>
-    <li>
-        @Html.ActionLink("Courses", "Index", "Courses")
-    </li>
-    <li>
-        @Html.ActionLink("Enrollments", "Index", "Enrollments")
-    </li>
-</ul>
-
-<script>
-    $("#menu").kendoMenu();
-</script>
-    -->

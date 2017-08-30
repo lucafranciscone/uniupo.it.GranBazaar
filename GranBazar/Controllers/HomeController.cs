@@ -38,6 +38,7 @@ namespace GranBazar.Controllers
                .Distinct()
                .Take(10);
 
+            //andrebbe tolta dalla sessione
             HttpContext.Session.Set<List<Prodotto>>("top10",idProdottiAcquistatiOrdinatiUltimo.ToList());
 
             return View(catalogoProdotti.ToList());

@@ -4,15 +4,13 @@
     ViewBag.Title = "HomePage";
     Layout = "_Layout";
     var top10 = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("top10");
-    
-
 }
 
 @model List<GranBazar.Models.Prodotto>
 
 <script src="~/js/CaroselloLuca.js"></script>
 
-
+<!--vecchio carosello, ora è un header che contiene immagine, andrà messo nel vecchio css-->
 <link href="~/styles/CaroselloLuca.css" rel="stylesheet">
 <div class="container">
     <div class="row">
@@ -29,18 +27,8 @@
 <br />
 
 
-
-
-
-<!-- Custom CSS -->
-<!-- Navigation -->
-<!-- Page Content -->
-
 <div class="container">
     <div class="row">
-              <!--Qui era presente il carousel, e' stato spostato in un'altra sezione->
-
-            <!--FIne carosello-->
             <div class="row" style="height:517.672px">
                 @foreach (var product in Model)
                 {
@@ -80,9 +68,7 @@
 
     </div>
 </div>
-
-<!-- /.container -->
-
+<!--
 <br />
 <br />
 <img src="~/img/top10.png" alt="" style="width:900px">
@@ -181,7 +167,8 @@
         }
     }
     );
+    
 </script>
 
-
+-->
 

@@ -14,6 +14,10 @@
     <Content Remove="wwwroot\styles\layout.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="wwwroot\styles\final_layout.css" />
+  </ItemGroup>
+
   
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
