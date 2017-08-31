@@ -130,6 +130,7 @@ div.panel:first-child {
     margin-top: 20px;
 }
 
+
 div.treeview {
     min-width: 100px;
     min-height: 100px;
@@ -162,6 +163,7 @@ div.treeview ul:first-child:before {
     margin-left: .5em
 }
 
+
 .treeview ul:before {
     content: "";
     display: block;
@@ -181,6 +183,7 @@ div.treeview ul:first-child:before {
     font-weight: 700;
     position: relative
 }
+
 
 .treeview ul li:before {
     content: "";

@@ -8,6 +8,7 @@ using GranBazar.Data;
 using GranBazar.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace GranBazar.Controllers
 {

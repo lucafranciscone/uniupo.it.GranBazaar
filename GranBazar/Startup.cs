@@ -90,11 +90,12 @@ namespace GranBazar
 
             
            
-            //handler globale
+            
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
-                
+                //await context.Response.Redirect("Account/PaginaNonTrovata");
+
             });
 
         }
