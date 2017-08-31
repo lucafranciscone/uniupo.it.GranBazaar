@@ -3,10 +3,16 @@
 <head>
     <title>@ViewBag.Title</title>
 
+    <!--inizio parte finale header-->
     <meta charset="utf-8" />
+    <link href="~/styles/final_layout.css" rel="stylesheet" />
+    <!--qui ci andrebbe lo script.js ma non funziona -.-, se messo nelle singole pagine si, non ha enso-->
+    <!--fine parte finale header-->
+
+    
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="~/styles/final_layout.css" rel="stylesheet" />
+    
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -18,8 +24,7 @@
     <link href="~/styles/kendo.default-v2.min.css" rel="stylesheet" />
     <!-- jQuery JavaScript -->
     <script src="~/js/jquery.min.js"></script>
-    <!-- Kendo UI combined JavaScript -->
-    <script src="~/js/kendo.all.min.js"></script>
+
 </head>
 <body>
     @RenderSection("Top", required: false)

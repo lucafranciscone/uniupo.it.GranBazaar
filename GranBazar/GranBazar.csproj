@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\js\script.js" />
     <Content Include="wwwroot\styles\final_layout.css" />
   </ItemGroup>
 
@@ -38,10 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Carrello\" />
     <Folder Include="Views\Checkout\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
 
 
@@ -50,14 +49,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.1" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.1" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <Content Update="Views\Prodotti\CatalogoProdotti.cshtml">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
 

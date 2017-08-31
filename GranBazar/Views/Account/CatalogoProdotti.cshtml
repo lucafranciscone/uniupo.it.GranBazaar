@@ -1,0 +1,65 @@
+@{
+    ViewBag.Title = "Catalogo prodotti";
+}
+@model List<GranBazar.Models.Prodotto>
+
+<script type="text/javascript" src="~/js/script.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" style="width:1200px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Catalogo prodotti</h3>
+                    <div class="pull-right" style="margin-top:-18px;font-size:15px">
+                        <span class="clickable filter" data-toggle="tooltip" title="Filtra" data-container="body" style="cursor:pointer;margin-left:15px">
+                            <i class="glyphicon glyphicon-filter"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="panel-body" style="display:none">
+                    <input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filtra" />
+                </div>
+                <table class="table table-hover" id="dev-table">
+                    <thead>
+                        <tr>
+                            <th style="width:15%">Nome Prodotto</th>
+                            <th>Descrizione</th>
+                            <th>Disponibile</th>
+                            <th>Prezzo</th>
+                            <th>Sconto</th>
+                            <th>Aggiorna</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for (int i = 0; i < Model.Count; i++){
+                        <form method="get" action="/Account/CatalogoProdotti">
+                            <tr>
+                                <input type="hidden" value="@Model.ElementAt(i).IdProdotto" name="idProdotto" id="idProdotto" />
+                                <td>@Model.ElementAt(i).NomeProdotto</td>
+                                <td>@Model.ElementAt(i).DescrizioneProdotto</td>
+                                @if (Model.ElementAt(i).Disponibile){
+                                <td>
+                                    <select name="stato">
+                                        <option name="true" selected>Disponibile</option>
+                                        <option name="false">Non disponibile</option>
+                                    </select>
+                                </td>}
+                                else{
+                                <td>
+                                    <select name="stato">
+                                        <option name="true">Disponibile</option>
+                                        <option name="false" selected>Non disponibile</option>
+                                    </select>
+                                </td>}
+                                <td><input type="text" name="prezzo" value="@Model.ElementAt(i).Prezzo" /></td>
+                                <td><input type="number" name="sconto" value="@Model.ElementAt(i).Sconto" min="0" max="99" step="1" /></td>
+                                <td><button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button></td>
+                            </tr>
+                        </form>}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
