@@ -1,133 +1,45 @@
-﻿@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@model List<Prodotto>
 @{
     ViewBag.Title = "HomePage";
     Layout = "_Layout";
-    var top10 = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("top10");
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<Utente>("utenteLoggato");
+    string ruolo = "";
+    if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };
 }
 
-@model List<GranBazar.Models.Prodotto>
-
-<script src="~/js/CaroselloLuca.js"></script>
-
-<!--vecchio carosello, ora è un header che contiene immagine, andrà messo nel vecchio css-->
-<link href="~/styles/CaroselloLuca.css" rel="stylesheet">
 <div class="container">
     <div class="row">
-        <div id="myCarousel" class="carousel  slide">
-            <!-- Items -->
-            <div class="carousel-inner">
-                <div class="active item">  <img src="~/img/header.png" class="img-responsive"></div>
-            </div>
+        <div class="row" style="height:517.672px">
+            @foreach (var product in Model)
+            {
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="@product.LinkImmagine">
+                        <div class="caption">
+                            <h4 class="pull-right">
+                                €@product.Prezzo<br />@if (product.Sconto > 0)
+                                {<p style="color:red">-&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}
+                            </h4>
+                            <h4>
+                                <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>
+                            </h4>
+                            <p>@product.DescrizioneProdotto</p>
+                        </div>
+                        <br />
+                        @if (!ruolo.Equals("Admin"))
+                        {
+                            @if (product.Disponibile)
+                            {
+                                <div class="btn-group cart" id="pulsante">
+                                    <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
+                                </div>}
+                            else
+                            {
+                                <div class="btn-group cart" id="pulsante">
+                                    <a class="btn btn-danger" style="width:145.08px">Non Disponibile</a>
+                                </div>}}
+                    </div>
+                </div>}
         </div>
     </div>
 </div>
-
-<br />
-<br />
-
-
-<!--
-<br />
-<br />
-<img src="~/img/top10.png" alt="" style="width:900px">
-
-<br />
-<br />
-<link href="~/styles/Top10.css" rel="stylesheet">
-
-@{int pos = 0;}
-
-
-@while (pos < top10.Count())
-{
-    @if (pos % 3 == 0)
-    {
-        <br />
-            <article>
-                <div class="item-wrapper">
-                    <figure>
-                        <div class="image" style="background-image:url(@top10.ElementAt(pos).LinkImmagine);"></div>
-                        <div class="lighting"></div>
-                    </figure>
-                    <div class="item-content">
-                        <h1>@(pos + 1) Posizione </h1>
-                        <p>@top10.ElementAt(pos).NomeProdotto</p>
-                    </div>
-                </div>
-            </article>
-
-
-    }
-    @if (pos % 3 == 1)
-    {
-        <article>
-            <div class="item-wrapper">
-                <figure>
-                    <div class="image" style="background-image:url(@top10.ElementAt(pos).LinkImmagine);"></div>
-                    <div class="lighting"></div>
-                </figure>
-                <div class="item-content">
-                    <h1>@(pos + 1) Posizione </h1>
-                    <p>@top10.ElementAt(pos).NomeProdotto</p>
-                </div>
-            </div>
-        </article>
-
-
-    }
-    @if (pos % 3 == 2)
-    {
-        <article>
-            <div class="item-wrapper">
-                <figure>
-                    <div class="image" style="background-image:url(@top10.ElementAt(pos).LinkImmagine);"></div>
-                    <div class="lighting"></div>
-                </figure>
-                <div class="item-content">
-                    <h1>@(pos + 1) Posizione </h1>
-                    <p>@top10.ElementAt(pos).NomeProdotto</p>
-                </div>
-            </div>
-        </article>
-    }
-    pos++;
-}
-
-
-<script>
-    var articles = $('article > .item-wrapper'),
-        lightingRgb = '255,255,255';
-
-    articles.mousemove(function (e) {
-        var current = $(this),
-            x = current.width() - e.offsetX * 2,
-            y = current.height() - e.offsetY * 2,
-            rx = -x / 30,
-            ry = y / 24,
-            deg = Math.atan2(y, x) * (180 / Math.PI) + 45;
-        current.css({ "transform": "scale(1.05) rotateY(" + rx + "deg) rotateX(" + ry + "deg)" });
-        $('figure > .lighting', this).css('background', 'linear-gradient(' + deg + 'deg, rgba(' + lightingRgb + ',0.32) 0%, rgba(' + lightingRgb + ',0) 100%)');
-    });
-
-    articles.on({
-        'mouseenter': function () {
-            var current = $(this);
-            current.addClass('enter ease').removeClass("leave");
-            setTimeout(function () {
-                current.removeClass('ease');
-            }, 280);
-        },
-        'mouseleave': function () {
-            var current = $(this);
-            current.css({ "transform": "rotate(0)" });
-            current.removeClass('enter').addClass("leave");
-            $('figure > .lighting', this).removeAttr('style');
-        }
-    }
-    );
-    
-</script>
-
--->
-

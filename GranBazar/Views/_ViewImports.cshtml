@@ -1,2 +1,10 @@
-﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+﻿@using GranBazar.Data
+@using GranBazar.Controllers
+@using GranBazar.Models
+@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
 @addTagHelper *, GranBazar

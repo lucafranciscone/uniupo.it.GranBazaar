@@ -1,8 +1,6 @@
-@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor HttpContextAccessor
 @{ 
     ViewBag.Title = "Carrello";
-    var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<GranBazar.Models.Prodotto>>("prodottiCarrello");
+    var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
     var listaQuantita = HttpContextAccessor.HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
     decimal tot = 0;
     var elementi = false;

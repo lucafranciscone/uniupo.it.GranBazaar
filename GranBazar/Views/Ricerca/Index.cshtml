@@ -1,8 +1,6 @@
-@model List<GranBazar.Models.Prodotto>
-@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor HttpContextAccessor
+@model List<Prodotto>
 @{
-    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<Utente>("utenteLoggato");
     ViewData["Title"] = "Ricerca prodotto";
     string ruolo = "";
     if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };

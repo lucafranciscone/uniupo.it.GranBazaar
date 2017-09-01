@@ -1,10 +1,9 @@
-@using GranBazar.Models
 @{
     ViewBag.Title = "Dashboard User";
     var elencoOrdini = (Dictionary<int, List<VistaProdottoOrdine>>)ViewData["elencoOrdini"];
     decimal tot = 0;
 }
-<script type="text/javascript" src="~/js/script.js"></script>
+
 
 <div class="container">
     @foreach (var list in elencoOrdini.Values) { 

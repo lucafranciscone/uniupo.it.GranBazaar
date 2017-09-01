@@ -50,8 +50,8 @@ namespace GranBazar
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-			//Serveirebbe per aggiungere HttpContextAccessor nelle Views, in questo modo evito di doverle iniettare in ogni pagina in cui mi serve lavorarci, ma non funziona
-			//services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			//Serve per aggiungere HttpContextAccessor nelle Views, in questo modo evito di doverle iniettare in ogni pagina in cui mi serve lavorarci
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			
             services.AddMvc();
 

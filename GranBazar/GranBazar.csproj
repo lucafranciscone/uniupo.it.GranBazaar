@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\js\script.js" />
+    <Content Include="wwwroot\js\Filtro.js" />
+    <Content Include="wwwroot\js\TreeList.js" />
     <Content Include="wwwroot\styles\StyleSheet.css" />
   </ItemGroup>
 

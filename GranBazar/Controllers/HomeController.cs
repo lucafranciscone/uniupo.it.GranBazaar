@@ -14,35 +14,29 @@ namespace GranBazar.Controllers
 {
     public class HomeController : Controller
     {
-        BazarContext Context;
-        ILogger Logger;
+        BazarContext context;
 
-        public HomeController (BazarContext context, ILogger<ProdottiController> logger)  {
-            Context = context;
-            Logger = logger;
+        public HomeController (BazarContext context)  {
+            this.context = context;
         }
 
         public IActionResult Index()
         {
-            
+            /*
+             * Seleziono i prodotti acquistati nell'ultimo mese,
+             * per farlo controllo che l'ordine del sia > della data di oggi - 1 mese
+             * Poi raggruppo per codice prodotto e prendo solo il primo
+             * */
+            var query = (
+                from prodotti in context.Prodotto
+                join ordiniProdotti in context.Ordine_Prodotto on prodotti.IdProdotto equals ordiniProdotti.IdProdotto
+                join ordini in context.Ordine on ordiniProdotti.IdOrdine equals ordini.IdOrdine
+                where ordini.DataOrdine > DateTime.Now.AddMonths(-1)
+                orderby ordiniProdotti.Quantita descending
+                select prodotti
+                ).GroupBy(p => p.IdProdotto).Select(y => y.First()).Take(10);
 
-
-            //devo far ritornare i primi 10 prodotti più acquistati
-            var idProdottiAcquistatiOrdinatiUltimo =
-              (from o in Context.Ordine_Prodotto
-               join p in Context.Prodotto
-                on o.IdProdotto equals p.IdProdotto
-
-               select p).OrderByDescending(n => n.IdProdotto)
-               .Distinct()
-               .Take(10);
-
-            //andrebbe tolta dalla sessione
-            HttpContext.Session.Set<List<Prodotto>>("top10",idProdottiAcquistatiOrdinatiUltimo.ToList());
-
-            return View();
-
-
+                return View(query.ToList());
         }
     }
 }
