@@ -1,7 +1,13 @@
-@{
-    ViewData["Title"] = "Ricerca prodotto";
-}
 @model List<GranBazar.Models.Prodotto>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
+    ViewData["Title"] = "Ricerca prodotto";
+    string ruolo = "";
+    if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };
+}
+
 
 <div class="container" style="margin-top:20px;">
     <table id="cart" class="table table-hover table-condensed">
@@ -16,7 +22,8 @@
 
         <tbody>
             @if (Model != null){
-            @foreach (var product in Model){
+            @foreach (var product in Model)
+            {
                 <form method="get" action="/Carrello/Index">
                     <tr>
                         <td>
@@ -35,6 +42,7 @@
                         </td>
                         <input type="hidden" value="@product.IdProdotto" name="idProdotto" id="idProdotto" />
                         <td>
+                            @if (!ruolo.Equals("Admin")){
                             @if (product.Disponibile){
                                 <div class="btn-group cart">
                                     <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
@@ -42,7 +50,7 @@
                             else{
                                 <div class="btn-group cart">
                                     <a class="btn btn-danger" style="width:146.2px;text-align:left">Non Disponibile</a>
-                                </div>}
+                                </div>}}
                            </td>
                     </tr>
                 </form>}}

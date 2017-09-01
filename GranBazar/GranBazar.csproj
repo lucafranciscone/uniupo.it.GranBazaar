@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\styles\shop-homepage.css" />
     <Content Include="wwwroot\js\script.js" />
-    <Content Include="wwwroot\styles\final_layout.css" />
     <Content Include="wwwroot\styles\StyleSheet.css" />
   </ItemGroup>
 

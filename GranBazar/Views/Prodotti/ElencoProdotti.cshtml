@@ -1,11 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor HttpContextAccessor
+@model List<GranBazar.Models.Prodotto>
 @{
     var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
     ViewBag.Title = "Prodotti";
     Layout = "_Layout";
+    string ruolo = "";
+    if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };
 }
-@model List<GranBazar.Models.Prodotto>
+
 
 <div class="container">
     <div class="row">
@@ -25,14 +28,15 @@
                             <p>@product.DescrizioneProdotto</p>
                         </div>
                         <br />
-                        @if (product.Disponibile && utenteLoggato.Ruolo.Equals("User")){
+                        @if (!ruolo.Equals("Admin")){
+                        @if (product.Disponibile){
                             <div class="btn-group cart" id="pulsante">
                                 <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
                             </div>}
-                        else if(utenteLoggato.Ruolo.Equals("User")){
+                        else{
                             <div class="btn-group cart" id="pulsante">
                                 <a class="btn btn-danger" style="width:145.08px">Non Disponibile</a>
-                            </div>}
+                            </div>}}
                     </div>
                 </div>}
         </div>

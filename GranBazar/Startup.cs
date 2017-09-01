@@ -20,9 +20,9 @@ namespace GranBazar
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }//aggiunto
+        public IConfigurationRoot Configuration { get; }
 
-        public Startup(IHostingEnvironment env)//aggiunto
+        public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -32,12 +32,6 @@ namespace GranBazar
             Configuration = builder.Build();
         }
 
-
-
-
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -56,11 +50,12 @@ namespace GranBazar
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
+			//Serveirebbe per aggiungere HttpContextAccessor nelle Views, in questo modo evito di doverle iniettare in ogni pagina in cui mi serve lavorarci, ma non funziona
+			//services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			
             services.AddMvc();
 
-
-
-            // Adds a default in-memory implementation of IDistributedCache.
+            //Servono per la sessione
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -70,10 +65,6 @@ namespace GranBazar
 
         }
 
-
-
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
@@ -82,20 +73,39 @@ namespace GranBazar
             {
                 app.UseDeveloperExceptionPage();
             }
-
+			
+			//Session
             app.UseSession();
+			
             app.UseIdentity();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
-            
-           
-            
+			//Handler globale, se qualche pagina non esiste rimando a Not Found
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
-                //await context.Response.Redirect("Account/PaginaNonTrovata");
-
+                await context.Response.WriteAsync(
+				"<html>\n" +
+                    "<head>\n<title>Pagina non trovata</title>\n" +
+						"<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles/StyleSheet.css\">\n" +
+                    "</head>\n" + 
+					"<body>\n<div class=\"error\">\n"+
+								"<div class=\"error-code m-b-10 m-t-20\">404 <i class=\"fa fa-warning\"></i></div>\n"+
+								"<h3 class=\"font-bold\">La pagina non e' stata trovata..</h3>\n"+
+								
+								"<div class=\"error-desc\">\n"+
+								"Scusa, la pagina che stai cercando non e' stata trovata o non esiste piu'.<br/>\n"+
+								"Clicca sul link qua sotto per tornare nella HomePage, grazie.<br/>\n"+
+								"<div>\n"+
+									"<a class=\" login-detail-panel-button btn\" href=\"/\">\n"+
+										"<i class=\"fa fa-arrow-left\"></i>\n"+
+										"Go back to Homepage		\n"+
+									"</a>\n"+
+								"</div>\n"+
+								"</div>\n"+
+							"</div>\n"+
+					"</body>\n"+
+				"</html>");
             });
 
         }
