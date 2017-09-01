@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
+    ViewBag.Title = "Prodotti";
+    Layout = "_Layout";
+}
+@model List<GranBazar.Models.Prodotto>
+
+<div class="container">
+    <div class="row">
+        <div class="row" style="height:517.672px">
+            @foreach (var product in Model){
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="@product.LinkImmagine">
+                        <div class="caption">
+                            <h4 class="pull-right">
+                                €@product.Prezzo<br />@if (product.Sconto > 0)
+                                {<p style="color:red">-&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}
+                            </h4>
+                            <h4>
+                                <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>
+                            </h4>
+                            <p>@product.DescrizioneProdotto</p>
+                        </div>
+                        <br />
+                        @if (product.Disponibile && utenteLoggato.Ruolo.Equals("User")){
+                            <div class="btn-group cart" id="pulsante">
+                                <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
+                            </div>}
+                        else if(utenteLoggato.Ruolo.Equals("User")){
+                            <div class="btn-group cart" id="pulsante">
+                                <a class="btn btn-danger" style="width:145.08px">Non Disponibile</a>
+                            </div>}
+                    </div>
+                </div>}
+        </div>
+    </div>
+</div>

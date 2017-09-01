@@ -24,9 +24,7 @@ namespace GranBazar.Controllers
 
         public IActionResult Index()
         {
-            var catalogoProdotti =
-                from x in Context.Prodotto
-                select x;
+            
 
 
             //devo far ritornare i primi 10 prodotti più acquistati
@@ -42,7 +40,7 @@ namespace GranBazar.Controllers
             //andrebbe tolta dalla sessione
             HttpContext.Session.Set<List<Prodotto>>("top10",idProdottiAcquistatiOrdinatiUltimo.ToList());
 
-            return View(catalogoProdotti.ToList());
+            return View();
 
 
         }

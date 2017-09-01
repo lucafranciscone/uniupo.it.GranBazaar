@@ -1,7 +1,11 @@
-﻿@model GranBazar.Models.Prodotto
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model GranBazar.Models.Prodotto
 @{
+    var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<GranBazar.Models.Utente>("utenteLoggato");
     ViewBag.Title = @Model.NomeProdotto;
 }
+
 
 <div class="container-fluid">
     <div class="content-wrapper">
@@ -19,11 +23,11 @@
                     <div class="product-price">@if (@Model.Sconto > 0)
                     {<p style="color:red;font-size:15px">Risparmi: &euro; @(Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2)) (@Model.Sconto%)</p><p style="color:red">Prezzo finale: &euro; @(Model.Prezzo - Math.Round((Decimal)(Model.Prezzo / 100 * Model.Sconto), 2))</p>}</div>
                     <hr>
-                    @if (Model.Disponibile){
+                    @if (Model.Disponibile && utenteLoggato.Ruolo.Equals("User")){
                     <div class="btn-group cart">
                         <a href="/Carrello/Index?id=@Model.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
                     </div>}
-                    else{
+                    else if(utenteLoggato.Ruolo.Equals("User")){
                     <div class="btn-group cart">
                         <a class="btn btn-danger">Non Disponibile</a>
                     </div>}

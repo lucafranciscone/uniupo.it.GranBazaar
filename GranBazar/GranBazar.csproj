@@ -15,8 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\styles\shop-homepage.css" />
     <Content Include="wwwroot\js\script.js" />
     <Content Include="wwwroot\styles\final_layout.css" />
+    <Content Include="wwwroot\styles\StyleSheet.css" />
   </ItemGroup>
 
   
@@ -38,9 +40,7 @@
     <PackageReference Include="T4WebFormsInjection" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Carrello\" />
-    <Folder Include="Views\Checkout\" />
   </ItemGroup>
 
 
