@@ -13,8 +13,6 @@ namespace GranBazar.Controllers
 
         BazarContext context;
     
-
-
         public RicercaController(BazarContext context)
         {
             this.context = context;
@@ -22,9 +20,10 @@ namespace GranBazar.Controllers
 
         public IActionResult Index(string search)
         {
+            /*se l'utente clicca sul bottone cerca ma non inserisce nulla rimando nella home page*/
             if(search==null)
             {
-                return View();
+                return RedirectToAction("Index","Home");
             }
             
             var prodottiContenentiSerach =
@@ -33,7 +32,8 @@ namespace GranBazar.Controllers
                    orderby x.Prezzo descending
                    select x;
 
-           
+            /*Nel caso la ricerca non produca risultati non sarebbe meglio riportare qualche scritta o qualcosa del genere?*/
+
 
             return View((List<Prodotto>)prodottiContenentiSerach.ToList());
         }

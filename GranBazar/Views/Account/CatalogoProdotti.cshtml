@@ -39,15 +39,15 @@
                                 @if (Model.ElementAt(i).Disponibile){
                                 <td>
                                     <select name="stato">
-                                        <option name="true" selected>Disponibile</option>
-                                        <option name="false">Non disponibile</option>
+                                        <option value="true" name="true" selected>Disponibile</option>
+                                        <option value="false" name="false">Non disponibile</option>
                                     </select>
                                 </td>}
                                 else{
                                 <td>
                                     <select name="stato">
-                                        <option name="true">Disponibile</option>
-                                        <option name="false" selected>Non disponibile</option>
+                                        <option  value="true" name="true">Disponibile</option>
+                                        <option  value="false" name="false" selected>Non disponibile</option>
                                     </select>
                                 </td>}
                                 <td><input type="text" name="prezzo" value="@Model.ElementAt(i).Prezzo" /></td>

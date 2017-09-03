@@ -24,7 +24,7 @@ namespace GranBazar.Controllers
         {
             /*
              * Seleziono i prodotti acquistati nell'ultimo mese,
-             * per farlo controllo che l'ordine del sia > della data di oggi - 1 mese
+             * per farlo controllo che la data dell'ordine del sia > della data di oggi - 1 mese
              * Poi raggruppo per codice prodotto e prendo solo il primo
              * */
             var query = (
@@ -38,5 +38,6 @@ namespace GranBazar.Controllers
 
                 return View(query.ToList());
         }
+
     }
 }

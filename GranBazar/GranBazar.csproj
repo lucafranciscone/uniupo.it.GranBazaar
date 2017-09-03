@@ -15,8 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\img\carello_final_fantasy.jpg.jpeg" />
     <Content Include="wwwroot\js\Filtro.js" />
     <Content Include="wwwroot\js\TreeList.js" />
+    <Content Include="wwwroot\styles\Carosello.css" />
     <Content Include="wwwroot\styles\StyleSheet.css" />
   </ItemGroup>
 
