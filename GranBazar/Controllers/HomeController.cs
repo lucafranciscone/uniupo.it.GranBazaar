@@ -36,7 +36,15 @@ namespace GranBazar.Controllers
                 select prodotti
                 ).GroupBy(p => p.IdProdotto).Select(y => y.First()).Take(10);
 
-                return View(query.ToList());
+
+
+            //recupero l'elenco di tutti i prodotti 
+            var elencoProdotti =
+                from x in context.Prodotto
+                select x;
+            ViewData["elencoProdotti"] = elencoProdotti.ToList();
+
+            return View(query.ToList());
         }
 
     }

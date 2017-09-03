@@ -28,14 +28,5 @@ namespace GranBazar.Controllers
             return View(prodotto.First());
         }
 
-        public IActionResult ElencoProdotti()
-        {
-            //recupero l'elenco di tutti i prodotti 
-            var elencoProdotti =
-                from x in context.Prodotto
-                select x;
-
-            return View(elencoProdotti.ToList());
-        }
     }
 }

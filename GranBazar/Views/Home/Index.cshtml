@@ -5,8 +5,8 @@
     var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<Utente>("utenteLoggato");
     string ruolo = "";
     if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };
-    int pos = 4;
     int ind = 0;
+    var elencoProdotti = (List<Prodotto>)ViewData["elencoProdotti"];
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -228,14 +228,23 @@
                         </div>
                     </div>
                 }
+            </div>
+        </div>
+    </div>
+</div>
                 <br />
                 <hr />
-                <br />
+                
 
                     <div class="container">
+                        <div class="col-md-9" style="left:-27px">
+                            <h3>Catalogo prodotti</h3>
+                            <br />
+                        </div>
+                        
                         <div class="row">
                             <div class="row" style="height:517.672px">
-                                @foreach (var product in Model)
+                                @foreach (var product in elencoProdotti)
                                 {
                                     <div class="col-sm-4 col-lg-4 col-md-4">
                                         <div class="thumbnail">
