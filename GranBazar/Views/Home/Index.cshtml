@@ -11,276 +11,296 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-<div class="container">
-    <div class="row">
-        <div class="row">
-            <div class="col-md-9">
-                <h3>Top 10 prodotti più venduti nell'ultimo mese</h3>
-                
-            </div>
-            <br />
-            <div class="col-md-3">
-                <!-- Controlli -->
-                <div class="controls pull-right hidden-xs">
-                    <a class="left fa fa-chevron-left btn btn" href="#carousel-example"
-                       data-slide="prev"></a><a class="right fa fa-chevron-right btn" href="#carousel-example"
-                                                data-slide="next"></a>
-                </div>
-            </div>
-        </div>
-        <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
-            <!-- Wrapper per le slide -->
-            <div class="carousel-inner">
-
-                <div class="item active">
-                    <div class="row">
-
-                        @if (Model!=null && (ind<3))
-                        {
-                            @for (int i = 0; i < 4 && i<Model.Count(); i++)
-                            {
-                                <div class="col-sm-3">
-                                    <div class="col-item">
-                                        <div class="info">
-                                            <div class="row">
-                                                <div class="price col-md-6" style="width:400px">
-                                                    <h5>@Model.ElementAt(i).NomeProdotto</h5>
-                                                    <h5 class="price-text-color">&euro;@Model.ElementAt(i).Prezzo @if (Model.ElementAt(i).Sconto > 0)
-                                                    {<span style="color:red">- &euro; @(Math.Round((Decimal)(Model.ElementAt(i).Prezzo / 100 * Model.ElementAt(i).Sconto), 2)) (@Model.ElementAt(i).Sconto%)</span>}
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="photo">
-                                            <img src="@Model.ElementAt(i).LinkImmagine" class="img-responsive" alt="a" />
-                                        </div>
-                                        <div class="info">
-                                            <div class="separator clear-left">
-                                                @if (!ruolo.Equals("Admin"))
-                                                {
-
-                                                    @if (Model.ElementAt(i).Disponibile)
-                                                    {
-
-                                                        <p class="btn-add">
-                                                            <i class="fa fa-shopping-cart"></i><a href="/Carrello/Index?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Disponibile</a>
-                                                        </p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p class="btn-add">
-                                                            <i class="fa fa-shopping-cart"></i><a class="hidden-sm">Terminato</a>
-                                                        </p>
-                                                        }
-
-                                                }
-                                                else
-                                                {
-                                                    <p class="btn-add"/>
-
-                                                        }
-                                                <p class="btn-details">
-                                                    <i class="fa fa-list"></i><a href="/Prodotti/SchedaProdotto?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Più dettagli</a>
-                                                </p>
-                                            </div>
-                                            <div class="clearfix">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                ind++;
-                            }
-                        }
-                       
+<div class="boxed">
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-9">
+                        <br />
+                        <h3>Top 10 prodotti più venduti nell'ultimo mese</h3>
+                        <br>
+                    </div>
+                    <br />
+                    <div class="col-md-3">
+                        <!-- Controlli -->
+                        <div class="controls pull-right hidden-xs">
+                            <a class="left fa fa-chevron-left btn btn" href="#carousel-example"
+                               data-slide="prev"></a><a class="right fa fa-chevron-right btn" href="#carousel-example"
+                                                        data-slide="next"></a>
+                        </div>
                     </div>
                 </div>
-            
-                <!--DAL 4 ELEMENTO ALL 8-->
+                <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
+                    <!-- Wrapper per le slide -->
+                    <div class="carousel-inner">
 
-                @if (ind >3 && ind<8)
-                {
-                    <div class="item">
-                        <div class="row">
-                        @for(int i = ind;i<Model.Count() && i<8;i++)
-                        {
-                           
-                                
-                                    <div class="col-sm-3">
-                                        <div class="col-item">
-                                            <div class="info">
-                                                <div class="row">
-                                                    <div class="price col-md-6" style="width:400px">
-                                                        <h5>@Model.ElementAt(i).NomeProdotto</h5>
-                                                        <h5 class="price-text-color">
-                                                            &euro;@Model.ElementAt(i).Prezzo @if (Model.ElementAt(i).Sconto > 0)
-                                                            {<span style="color:red">- &euro; @(Math.Round((Decimal)(Model.ElementAt(i).Prezzo / 100 * Model.ElementAt(i).Sconto), 2)) (@Model.ElementAt(i).Sconto%)</span>}
-                                                            
-                                                        </h5>
+                        <div class="item active">
+                            <div class="row">
+
+                                @if (Model != null && (ind < 3))
+                                {
+                                    @for (int i = 0; i < 4 && i < Model.Count(); i++)
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="col-item">
+                                                <div class="info">
+                                                    <div class="row">
+                                                        <div class="price col-md-6" style="width:400px">
+                                                            <h5>@Model.ElementAt(i).NomeProdotto</h5>
+                                                            <h5 class="price-text-color">
+                                                                &euro;@Model.ElementAt(i).Prezzo @if (Model.ElementAt(i).Sconto > 0)
+                                                                {<span style="color:red">- &euro; @(Math.Round((Decimal)(Model.ElementAt(i).Prezzo / 100 * Model.ElementAt(i).Sconto), 2)) (@Model.ElementAt(i).Sconto%)</span>}
+                                                            </h5>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="photo">
-                                                <img src="@Model.ElementAt(i).LinkImmagine" class="img-responsive" alt="a" />
-                                            </div>
-                                            <div class="info">
-                                                <div class="separator clear-left">
-                                                    @if (!ruolo.Equals("Admin"))
-                                                    {
-
-                                                        @if (Model.ElementAt(i).Disponibile)
+                                                <div class="photo">
+                                                    <img src="@Model.ElementAt(i).LinkImmagine" class="img-responsive" alt="a" />
+                                                </div>
+                                                <div class="info">
+                                                    <div class="separator clear-left">
+                                                        @if (!ruolo.Equals("Admin"))
                                                         {
 
-                                                            <p class="btn-add">
-                                                                <i class="fa fa-shopping-cart"></i><a href="/Carrello/Index?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Disponibile</a>
-                                                            </p>
+                                                            @if (Model.ElementAt(i).Disponibile)
+                                                            {
+
+                                                                <p class="btn-add">
+                                                                    <i class="fa fa-shopping-cart"></i><a href="/Carrello/Index?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Disponibile</a>
+                                                                </p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="btn-add">
+                                                                    <i class="fa fa-shopping-cart"></i><a class="hidden-sm">Terminato</a>
+                                                                </p>
+                                                            }
+
                                                         }
                                                         else
                                                         {
-                                                            <p class="btn-add">
-                                                                <i class="fa fa-shopping-cart"></i><a class="hidden-sm">Terminato</a>
-                                                            </p>
+                                                            <p class="btn-add" />
+
                                                         }
-
-                                                    }
-                                                    else
-                                                    {
-                                                        <p class="btn-add" />
-
-                                                    }
-                                                    <p class="btn-details">
-                                                        <i class="fa fa-list"></i><a href="/Prodotti/SchedaProdotto?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Più dettagli</a>
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            ind++;
-                        }
-                                
-                                              
-                        </div>
-                   </div>
-                }
-
-                @if (ind > 7)
-                {
-                    <div class="item">
-                        <div class="row">
-                            @for (int i = ind; i <Model.Count() && i<11; i++)
-                            {
-                                <div class="col-sm-3">
-                                    <div class="col-item">
-                                        <div class="info">
-                                            <div class="row">
-                                                <div class="price col-md-6" style="width:400px">
-                                                    <h5>@Model.ElementAt(i).NomeProdotto</h5>
-                                                    <h5 class="price-text-color">
-                                                        &euro;@Model.ElementAt(i).Prezzo @if (Model.ElementAt(i).Sconto > 0)
-                                                        {<span style="color:red">- &euro; @(Math.Round((Decimal)(Model.ElementAt(i).Prezzo / 100 * Model.ElementAt(i).Sconto), 2)) (@Model.ElementAt(i).Sconto%)</span>}
-                                                        
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="photo">
-                                            <img src="@Model.ElementAt(i).LinkImmagine" class="img-responsive" alt="a" />
-                                        </div>
-                                        <div class="info">
-                                            <div class="separator clear-left">
-                                                @if (!ruolo.Equals("Admin"))
-                                                {
-
-                                                    @if (Model.ElementAt(i).Disponibile)
-                                                    {
-
-                                                        <p class="btn-add">
-                                                            <i class="fa fa-shopping-cart"></i><a href="/Carrello/Index?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Disponibile</a>
+                                                        <p class="btn-details">
+                                                            <i class="fa fa-list"></i><a href="/Prodotti/SchedaProdotto?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Più dettagli</a>
                                                         </p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p class="btn-add">
-                                                            <i class="fa fa-shopping-cart"></i><a class="hidden-sm">Terminato</a>
-                                                        </p>
-                                                    }
-
-                                                }
-                                                else
-                                                {
-                                                    <p class="btn-add" />
-
-                                                }
-                                                <p class="btn-details">
-                                                    <i class="fa fa-list"></i><a href="/Prodotti/SchedaProdotto?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Più dettagli</a>
-                                                </p>
-                                            </div>
-                                            <div class="clearfix">
+                                                    </div>
+                                                    <div class="clearfix">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                ind++;
-                            }
+                                        ind++;
+                                    }
+                                }
 
-
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-</div>
-                <br />
-                <hr />
-                
-
-                    <div class="container">
-                        <div class="col-md-9" style="left:-27px">
-                            <h3>Catalogo prodotti</h3>
-                            <br />
-                        </div>
-                        
-                        <div class="row">
-                            <div class="row" style="height:517.672px">
-                                @foreach (var product in elencoProdotti)
-                                {
-                                    <div class="col-sm-4 col-lg-4 col-md-4">
-                                        <div class="thumbnail">
-                                            <img src="@product.LinkImmagine">
-                                            <div class="caption">
-                                                <h4 class="pull-right">
-                                                    €@product.Prezzo<br />@if (product.Sconto > 0)
-                                                    {<p style="color:red">-&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}
-                                                </h4>
-                                                <h4>
-                                                    <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>
-                                                </h4>
-                                                <p>@product.DescrizioneProdotto</p>
-                                            </div>
-                                            <br />
-                                            @if (!ruolo.Equals("Admin"))
-                                            {
-                                                @if (product.Disponibile)
-                                                {
-                                                    <div class="btn-group cart" id="pulsante">
-                                                        <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
-                                                    </div>}
-                                                else
-                                                {
-                                                    <div class="btn-group cart" id="pulsante">
-                                                        <a class="btn btn-danger" style="width:145.08px">Non Disponibile</a>
-                                                    </div>}}
-                                        </div>
-                                    </div>}
                             </div>
                         </div>
+
+                        <!--DAL 4 ELEMENTO ALL 8-->
+
+                        @if (ind > 3 && ind < 8)
+                        {
+                            <div class="item">
+                                <div class="row">
+                                    @for (int i = ind; i < Model.Count() && i < 8; i++)
+                                    {
+
+
+                                        <div class="col-sm-3">
+                                            <div class="col-item">
+                                                <div class="info">
+                                                    <div class="row">
+                                                        <div class="price col-md-6" style="width:400px">
+                                                            <h5>@Model.ElementAt(i).NomeProdotto</h5>
+                                                            <h5 class="price-text-color">
+                                                                &euro;@Model.ElementAt(i).Prezzo @if (Model.ElementAt(i).Sconto > 0)
+                                                                {<span style="color:red">- &euro; @(Math.Round((Decimal)(Model.ElementAt(i).Prezzo / 100 * Model.ElementAt(i).Sconto), 2)) (@Model.ElementAt(i).Sconto%)</span>}
+
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="photo">
+                                                    <img src="@Model.ElementAt(i).LinkImmagine" class="img-responsive" alt="a" />
+                                                </div>
+                                                <div class="info">
+                                                    <div class="separator clear-left">
+                                                        @if (!ruolo.Equals("Admin"))
+                                                        {
+
+                                                            @if (Model.ElementAt(i).Disponibile)
+                                                            {
+
+                                                                <p class="btn-add">
+                                                                    <i class="fa fa-shopping-cart"></i><a href="/Carrello/Index?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Disponibile</a>
+                                                                </p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="btn-add">
+                                                                    <i class="fa fa-shopping-cart"></i><a class="hidden-sm">Terminato</a>
+                                                                </p>
+                                                            }
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="btn-add" />
+
+                                                        }
+                                                        <p class="btn-details">
+                                                            <i class="fa fa-list"></i><a href="/Prodotti/SchedaProdotto?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Più dettagli</a>
+                                                        </p>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ind++;
+                                    }
+
+
+                                </div>
+                            </div>
+                        }
+
+                        @if (ind > 7)
+                        {
+                            <div class="item">
+                                <div class="row">
+                                    @for (int i = ind; i < Model.Count() && i < 11; i++)
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="col-item">
+                                                <div class="info">
+                                                    <div class="row">
+                                                        <div class="price col-md-6" style="width:400px">
+                                                            <h5>@Model.ElementAt(i).NomeProdotto</h5>
+                                                            <h5 class="price-text-color">
+                                                                &euro;@Model.ElementAt(i).Prezzo @if (Model.ElementAt(i).Sconto > 0)
+                                                                {<span style="color:red">- &euro; @(Math.Round((Decimal)(Model.ElementAt(i).Prezzo / 100 * Model.ElementAt(i).Sconto), 2)) (@Model.ElementAt(i).Sconto%)</span>}
+
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="photo">
+                                                    <img src="@Model.ElementAt(i).LinkImmagine" class="img-responsive" alt="a" />
+                                                </div>
+                                                <div class="info">
+                                                    <div class="separator clear-left">
+                                                        @if (!ruolo.Equals("Admin"))
+                                                        {
+
+                                                            @if (Model.ElementAt(i).Disponibile)
+                                                            {
+
+                                                                <p class="btn-add">
+                                                                    <i class="fa fa-shopping-cart"></i><a href="/Carrello/Index?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Disponibile</a>
+                                                                </p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="btn-add">
+                                                                    <i class="fa fa-shopping-cart"></i><a class="hidden-sm">Terminato</a>
+                                                                </p>
+                                                            }
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="btn-add" />
+
+                                                        }
+                                                        <p class="btn-details">
+                                                            <i class="fa fa-list"></i><a href="/Prodotti/SchedaProdotto?id=@Model.ElementAt(i).IdProdotto" class="hidden-sm">Più dettagli</a>
+                                                        </p>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ind++;
+                                    }
+
+
+                                </div>
+                            </div>
+                        }
                     </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <hr />
+
+
+        <div class="container">
+            <div class="col-md-9" style="left:-27px">
+                <h3>Catalogo prodotti</h3>
+                <br />
+            </div>
+
+            <div class="row">
+                <div class="row" style="height:517.672px">
+                    @foreach (var product in elencoProdotti)
+                    {
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                            <div class="thumbnail">
+                                <img src="@product.LinkImmagine">
+                                <div class="caption">
+                                    <h4 class="pull-right">
+                                        €@product.Prezzo<br />@if (product.Sconto > 0)
+                                        {<p style="color:red">-&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}
+                                    </h4>
+                                    <h4>
+                                        <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>
+                                    </h4>
+                                    <p>@product.DescrizioneProdotto</p>
+                                </div>
+                                <br />
+                                @if (!ruolo.Equals("Admin"))
+                                {
+                                    @if (product.Disponibile)
+                                    {
+                                        <div class="btn-group cart" id="pulsante">
+                                            <a href="/Carrello/Index?id=@product.IdProdotto" class="btn btn-success">Aggiungi al carrello</a>
+                                        </div>}
+                                    else
+                                    {
+                                        <div class="btn-group cart" id="pulsante">
+                                            <a class="btn btn-danger" style="width:145.08px">Non Disponibile</a>
+                                        </div>}}
+                            </div>
+                        </div>}
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
 
                         <style>
+                            .boxed{
+                                margin-top:-20px;
+                                background-color:#f8f8f8;
+                            }
+                            article{
+                                margin:auto;
+                                
+                                width:1250px;
+                                background-color:white;
+                                
+                            }
+
+                   
+
                             .col-item {
-                                border: 2px solid #2323A1;
+                                border: 2px solid black;
                                 border-radius: 5px;
                                 background: #FFF;
                             }
