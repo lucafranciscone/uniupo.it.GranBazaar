@@ -25,7 +25,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <form class="col-xs-@(ruolo.Equals("User") ? "7" : ruolo.Equals("Admin") ? "5":"9")" style="top:9px;left:24px" method="get" action="/Ricerca/Index">
+                <form class="col-xs-@(ruolo.Equals("User") ? "7" : ruolo.Equals("Admin") ? "6":"9")" style="top:9px;left:24px" method="get" action="/Ricerca/Index">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="Cerca.." id="search">
                         <span class="input-group-btn">
@@ -34,7 +34,7 @@
                    </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">   
-                    <li>@Html.ActionLink("Carrello", "Index", "Carrello")</li>
+                    @if (!ruolo.Equals("Admin")){<li>@Html.ActionLink("Carrello", "Index", "Carrello")</li>}
                     <!--bisogna migliorare questa parte, renderla più carina
                     <li style="top:16px;" ><img src="~/img/cart_icon.png" /></li>-->
                     <li style="top:16px;">@if (numeroDiElementiInCarrello != null) { <div>-> (@numeroDiElementiInCarrello)</div> } </li>

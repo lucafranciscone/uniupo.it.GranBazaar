@@ -21,7 +21,8 @@
                                         <table id="cart" class="table table-hover table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:50%">Prodotto</th>
+                                                    <th style="width:42%">Prodotto</th>
+                                                    <th style="width:8%">Stato</th>
                                                     <th style="width:10%">Prezzo</th>
                                                     <th style="width:10%">Sconto</th>
                                                     <th style="width:10%">Quantita'</th>
@@ -41,6 +42,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td data-th="Product">@element.Stato</td>
                                                         <td data-th="Price">&euro; @element.Prezzo</td>
                                                         <td style="color:red">
                                                             @if (element.Sconto > 0)
@@ -64,7 +66,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="3" class="hidden-xs"></td>
+                                                    <td colspan="5" class="hidden-xs"></td>
                                                     <td class="hidden-xs text-center"><strong>Totale &euro; @tot</strong></td>
                                                 </tr>
                                             </tfoot>
