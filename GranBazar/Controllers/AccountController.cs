@@ -114,7 +114,7 @@ namespace GranBazar.Controllers
 
         public IActionResult ElencoUtenti(string email, string ruolo)
         {
-            if (email != null && ruolo != null && (ruolo.Equals("Admin") || ruolo.Equals("User")))
+            if ("Admin".Equals(ruolo) || "User".Equals(ruolo))
             {
                 var utenteDaAggiornare =
                      from user in context.Utente

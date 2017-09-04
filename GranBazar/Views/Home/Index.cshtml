@@ -256,7 +256,7 @@
                                 <div class="caption">
                                     <h4 class="pull-right">
                                         €@product.Prezzo<br />@if (product.Sconto > 0)
-                                        {<p style="color:red">-&euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}
+                                        {<p style="color:red">- &euro; @(Math.Round((Decimal)(product.Prezzo / 100 * product.Sconto), 2)) (@product.Sconto%)</p>}
                                     </h4>
                                     <h4>
                                         <a href="/Prodotti/SchedaProdotto?id=@product.IdProdotto">@product.NomeProdotto</a>

@@ -42,6 +42,7 @@ namespace GranBazar.Controllers
             var elencoProdotti =
                 from x in context.Prodotto
                 select x;
+
             ViewData["elencoProdotti"] = elencoProdotti.ToList();
 
             return View(query.ToList());

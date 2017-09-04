@@ -88,12 +88,15 @@ namespace GranBazar.Controllers
             return View();
         }
 
-        public IActionResult RimuoviProdotto(int id)
+        public IActionResult RimuoviProdotto(int? id)
         {
             var query =
                 from x in context.Prodotto
                 where x.IdProdotto == id
                 select x;
+
+            if (id == null || query.Count() == 0)
+                return RedirectToAction("Index");
 
             //Recupero dalla sessione gli elementi nel carrello e la loro quantità 
             var temp = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
@@ -120,6 +123,9 @@ namespace GranBazar.Controllers
                 from x in context.Prodotto
                 where x.IdProdotto == idProdotto
                 select x;
+
+            if (idProdotto == null || query.Count() == 0 || quantita == null || quantita <= 0)
+                return RedirectToAction("Index");
 
             var tempProdottiInCarrello = HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
             var tempQta = HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
