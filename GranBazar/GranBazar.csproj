@@ -10,13 +10,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot\styles\layout.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="wwwroot\img\cart_icon.png" />
-  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />

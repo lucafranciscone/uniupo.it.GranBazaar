@@ -59,11 +59,13 @@
         </tbody>
         <tfoot>
             <tr>
-                <td><a href="/Home/Index" class="btn btn-warning" style="margin-top:15px"><i class="fa fa-angle-left"></i> Continua lo shopping</a></td>
+                <td><a href="/Home/Index" class="btn btn-warning" style="margin-top:15px"><i class="fa fa-angle-left"></i> Continua lo shopping</a></td>                          
                 <td colspan="3" class="hidden-xs"></td>
                 <td class="text-center"  style="padding-top:20px"><strong>Totale &euro; @tot</strong></td>
-                @if (elementi) {<td><a href="/Checkout/Index" class="btn btn-success btn-block" style="margin-top:15px">Checkout <i class="fa fa-angle-right"></i></a></td>}
+                @if (elementi) {<td><a href="/Carrello/SvuotaCarrello" class="btn btn-success btn-block" style="margin-top:15px">Svuota carrello <i class="fa fa-angle-right"></i></a></td>}
             </tr>
         </tfoot>
     </table>
 </div>
+@if (elementi)
+{<a href="/Carrello/SvuotaCarrello" class="btn btn-warning" style="margin-top:15px;margin-left:235px;width:167px;">Svuota Cestino<i class="fa fa-angle-left"></i></a>}

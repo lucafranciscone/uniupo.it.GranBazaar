@@ -141,5 +141,16 @@ namespace GranBazar.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult SvuotaCarrello()
+        {
+            HttpContext.Session.Remove("prodottiCarrello");
+            HttpContext.Session.Remove("quantitaPerProdotto");
+
+            HttpContext.Session.SetInt32("numeroElementiInCarrello", 0);
+            return RedirectToAction("Index");
+
+
+        }
+
     }
 }
