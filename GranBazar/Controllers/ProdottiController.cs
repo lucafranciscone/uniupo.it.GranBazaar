@@ -25,6 +25,8 @@ namespace GranBazar.Controllers
                 where x.IdProdotto == id
                 select x;
 
+            if (prodotto.Count() == 0) return RedirectToAction("Error", "Home");
+
             return View(prodotto.First());
         }
 

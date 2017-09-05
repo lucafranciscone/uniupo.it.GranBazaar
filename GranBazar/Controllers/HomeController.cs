@@ -48,5 +48,7 @@ namespace GranBazar.Controllers
             return View(query.ToList());
         }
 
+        public IActionResult Error() => View();
+
     }
 }

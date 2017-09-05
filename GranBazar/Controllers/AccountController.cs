@@ -129,6 +129,7 @@ namespace GranBazar.Controllers
             var utente =
                   from user in context.Utente
                   select user;
+
             return View(utente.ToList());
         }
 
@@ -144,6 +145,8 @@ namespace GranBazar.Controllers
                     from prod in context.Prodotto
                     where prod.IdProdotto == idProdotto
                     select prod;
+
+                if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
 
                 Prodotto p = prodottoDaAggiornare.First();
                 p.Prezzo = Decimal.Parse(prezzo);
