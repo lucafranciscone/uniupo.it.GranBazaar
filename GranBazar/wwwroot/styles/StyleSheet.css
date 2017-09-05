@@ -1,15 +1,15 @@
-﻿
+﻿/*********************************************
+		    Carosello
+*********************************************/
+
+
 /*********************************************
 			Scheda Prodotto
 *********************************************/
 
-
-
 /*Prodotti*/
 
 .product {
-    /*border: 1px solid #dddddd;*/
-    /*height: 321px;*/
     width: 230px;
     height: 350px;
 }
@@ -27,13 +27,6 @@
 .product-price {
     font-size: 22px;
 }
-
-/*
-.product-stock {
-    /*color: #74DF00;
-    font-size: 20px;
-    margin-top: 0px;
-}*/
 
 .product-info {
     margin-top: 50px;
@@ -65,8 +58,6 @@
     max-width: 100%;
 }
 
-/*Item, questa parte può essere cancellata, la lascio così puoi prima vedere cosa andrebbe tolta tolto*/
-
 /*********************************************
 			TreeList Ordini
 *********************************************/
@@ -77,11 +68,9 @@ div.panel:first-child {
 
 
 div.treeview {
-    /*/luca */
     font-size: 14px;
     color:black;
     font-family:Arial;
-    /*min-width: 100px;*/
     min-height: 100px;
     max-height: 256px;
     overflow: auto;
@@ -129,15 +118,11 @@ div.treeview ul:first-child:before {
 
 .treeview li {
     margin: 0;
-    /*padding: 0 1em;
-    line-height: 2em;
-    font-weight: 700;*/
     position: relative
 }
 
 
 .treeview ul li:before {
-    /*content: "";*/
     display: block;
     width: 10px;
     height: 0;
@@ -172,62 +157,10 @@ div.treeview ul:first-child:before {
 /*********************************************
 			    Carrello
 *********************************************/
-/*forse anche sta parte si può cancellare*/
+
 .table > tbody > tr > td, .table > tfoot > tr > td {
     vertical-align: middle;
 }
-
-/*
-@media screen and (max-width: 600px) {
-    
-    table#cart tbody td .form-control {
-        /*width: 20%;
-        display: inline !important;
-    }
-
-    .btn {
-        width: 36%;
-        margin: 1.5em 0;
-    }
-    
-    .btn-info {
-        float: left;
-    }
-
-    .btn-danger {
-        float: right;
-    }
-
-    table#cart thead {
-        display: none;
-    }
-
-    table#cart tbody td {
-        display: block;
-        padding: .6rem;
-        min-width: 320px;
-    }
-
-    table#cart tbody tr td:first-child {
-        background: #333;
-        color: #fff;
-    }
-
-    table#cart tbody td:before {
-        content: attr(data-th);
-        font-weight: bold;
-        display: inline-block;
-        width: 8rem;
-    }
-
-    table#cart tfoot td {
-        display: block;
-    }
-
-    table#cart tfoot td .btn {
-        display: block;
-    }
-}*/
 
 /*********************************************
 			   Da ricondurre
@@ -280,20 +213,9 @@ body {
     overflow: hidden;
 }
 
-/*
-.caption h4 {
-    white-space: nowrap;
-}*/
-
 .thumbnail img {
     width: 100%;
 }
-
-/*
-.thumbnail .caption-full {
-        padding: 9px;
-        color: #333;
-    }*/
 
 #pulsante {
     padding-left:30%;
