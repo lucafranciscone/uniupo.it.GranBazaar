@@ -136,7 +136,7 @@ namespace GranBazar.Controllers
         /*
         * da sistemare o ottimizzare questo pezzo, successivamente traformare la vista in tabella filtrabile
         * */
-        public IActionResult CatalogoProdotti(int? idProdotto, bool? stato, string prezzo, int sconto)
+        public IActionResult CatalogoProdotti(int? idProdotto,string nome, string descrizione, bool? stato, string prezzo, int sconto)
         {
             //aggiorno il prezzo
             if (prezzo != null && idProdotto != null && Decimal.Parse(prezzo) > 0)
@@ -150,6 +150,36 @@ namespace GranBazar.Controllers
 
                 Prodotto p = prodottoDaAggiornare.First();
                 p.Prezzo = Decimal.Parse(prezzo);
+                context.SaveChanges();
+            }
+
+            //aggiorno nome
+            if(idProdotto != null && nome.Length > 0)
+            {
+                var prodottoDaAggiornare =
+                    from prod in context.Prodotto
+                    where prod.IdProdotto == idProdotto
+                    select prod;
+
+                if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
+
+                Prodotto p = prodottoDaAggiornare.First();
+                p.NomeProdotto = nome;
+                context.SaveChanges();
+            }
+
+            //aggiorno descrizione
+            if (idProdotto != null && descrizione.Length > 0)
+            {
+                var prodottoDaAggiornare =
+                    from prod in context.Prodotto
+                    where prod.IdProdotto == idProdotto
+                    select prod;
+
+                if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
+
+                Prodotto p = prodottoDaAggiornare.First();
+                p.DescrizioneProdotto = descrizione;
                 context.SaveChanges();
             }
 

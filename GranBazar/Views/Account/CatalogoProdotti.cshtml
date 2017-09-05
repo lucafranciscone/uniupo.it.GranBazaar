@@ -22,10 +22,10 @@
                     <thead>
                         <tr>
                             <th style="width:15%">Nome Prodotto</th>
-                            <th>Descrizione</th>
-                            <th>Disponibile</th>
-                            <th>Prezzo</th>
-                            <th>Sconto</th>
+                            <th style="width:54%">Descrizione</th>
+                            <th style="width:15%">Disponibile</th>
+                            <th style="width:8%">Prezzo</th>
+                            <th style="width:8%">Sconto</th>
                             <th>Aggiorna</th>
                         </tr>
                     </thead>
@@ -34,24 +34,24 @@
                         <form method="get" action="/Account/CatalogoProdotti">
                             <tr>
                                 <input type="hidden" value="@Model.ElementAt(i).IdProdotto" name="idProdotto" id="idProdotto" />
-                                <td>@Model.ElementAt(i).NomeProdotto</td>
-                                <td>@Model.ElementAt(i).DescrizioneProdotto</td>
+                                <td><textarea type="text" name="nome" class="form-control" >@Model.ElementAt(i).NomeProdotto</textarea></td>
+                                <td><textarea type="text" name="descrizione" class="form-control" rows="5">@Model.ElementAt(i).DescrizioneProdotto</textarea></td>
                                 @if (Model.ElementAt(i).Disponibile){
                                 <td>
-                                    <select name="stato">
+                                    <select name="stato" class="form-control">
                                         <option value="true" name="true" selected>Disponibile</option>
                                         <option value="false" name="false">Non disponibile</option>
                                     </select>
                                 </td>}
                                 else{
                                 <td>
-                                    <select name="stato">
+                                    <select name="stato" class="form-control">
                                         <option  value="true" name="true">Disponibile</option>
                                         <option  value="false" name="false" selected>Non disponibile</option>
                                     </select>
                                 </td>}
-                                <td><input type="text" name="prezzo" value="@Model.ElementAt(i).Prezzo" /></td>
-                                <td><input type="number" name="sconto" value="@Model.ElementAt(i).Sconto" min="0" max="99" step="1" /></td>
+                                <td><input type="text" name="prezzo" value="@Model.ElementAt(i).Prezzo" class="form-control"/></td>
+                                <td><input type="number" name="sconto" value="@Model.ElementAt(i).Sconto" min="0" max="99" step="1" class="form-control" /></td>
                                 <td><button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button></td>
                             </tr>
                         </form>}
