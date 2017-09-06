@@ -34,10 +34,7 @@
                    </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">   
-                    @if (!ruolo.Equals("Admin")){<li>@Html.ActionLink("Carrello", "Index", "Carrello")</li>}
-                    <!--bisogna migliorare questa parte, renderla più carina
-                    <li style="top:16px;" ><img src="~/img/cart_icon.png" /></li>-->
-                    <li style="top:16px;">@if (numeroDiElementiInCarrello != null) { <div>-> (@numeroDiElementiInCarrello)</div> } </li>
+                    @if (!ruolo.Equals("Admin")){<li><a href="@Url.Action("Index", "Carrello")"><img src="~/img/cart_icon.png"/>      Carrello</a></li>}
                     @if (ruolo.Equals("")){<li>@Html.ActionLink("Login", "Login", "Account", new { url = Context.Request.Path + Context.Request.QueryString })</li> }
                     else{<li>@Html.ActionLink("Logout", "Logout", "Account")</li> }
                 </ul>

@@ -37,7 +37,7 @@
                         <td>&euro; @product.value.Prezzo</td>
                         <td style="color:red">
                             @if (product.value.Sconto > 0)
-                                {<p style="margin-top:8px;">&euro; @(Math.Round((Decimal)(product.value.Prezzo / 100 * product.value.Sconto), 2)) (@product.value.Sconto%)</p>}
+                                {<p>&euro; @(Math.Round((Decimal)(product.value.Prezzo / 100 * product.value.Sconto), 2)) (@product.value.Sconto%)</p>}
                         </td>
                         <td>
                             <input type="number" class="form-control text-center" value="@listaQuantita[product.i]" min="1" name="quantita" id="quantita">
@@ -45,7 +45,7 @@
                         </td>
                         <td class="text-center">
                             @if (product.value.Sconto > 0)
-                                {<p style="margin-top:8px;">&euro; @(Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2) * listaQuantita[product.i])</p>
+                                {<p>&euro; @(Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2) * listaQuantita[product.i])</p>
                                 tot += (Math.Round((Decimal)(product.value.Prezzo - product.value.Prezzo / 100 * product.value.Sconto), 2)) * listaQuantita[product.i];}
                             else
                             {<p>&euro; @(product.value.Prezzo * listaQuantita[product.i])</p>
