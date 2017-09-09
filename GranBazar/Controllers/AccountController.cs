@@ -77,14 +77,14 @@ namespace GranBazar.Controllers
                 var user = await userManager.FindByEmailAsync(email);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login");
+                    ModelState.AddModelError(string.Empty, "Email non corretta. Riprova.");
                     return View();
                 }
                 var passwordSignInResult = await signInManager.PasswordSignInAsync(user, password,
                     isPersistent: rememberMe, lockoutOnFailure: false);
                 if (!passwordSignInResult.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login");
+                    ModelState.AddModelError(string.Empty, "Password non corretta. Riprova.");
                     return View();
                 }
 
@@ -108,7 +108,7 @@ namespace GranBazar.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            HttpContext.Session.Clear();            //toglie tutti gli oggetti in sessione
+            HttpContext.Session.Clear();            
             return Redirect("~/");
         }
 
@@ -133,124 +133,60 @@ namespace GranBazar.Controllers
             return View(utente.ToList());
         }
 
-        /*
-        * da sistemare o ottimizzare questo pezzo, successivamente traformare la vista in tabella filtrabile
-        * */
         public IActionResult CatalogoProdotti(int? idProdotto,string nome, string descrizione, bool? stato, string prezzo, int sconto)
         {
-            //aggiorno il prezzo
-            if (prezzo != null && idProdotto != null && Decimal.Parse(prezzo) > 0)
+            //Controllo se non è una modifica
+            if(idProdotto  == null || idProdotto<=0     || 
+               nome        == null || nome==""          ||
+               descrizione == null || descrizione == "" ||
+               stato       == null ||
+               prezzo      == null || prezzo == ""      || Decimal.Parse(prezzo) <= 0)
             {
-                var prodottoDaAggiornare =
-                    from prod in context.Prodotto
-                    where prod.IdProdotto == idProdotto
-                    select prod;
-
-                if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
-
-                Prodotto p = prodottoDaAggiornare.First();
-                p.Prezzo = Decimal.Parse(prezzo);
-                context.SaveChanges();
+                var catalogoProdotti =
+                from prod in context.Prodotto
+                select prod;
+                return View(catalogoProdotti.ToList());
             }
 
-            //aggiorno nome
-            if(idProdotto != null && nome.Length > 0)
-            {
-                var prodottoDaAggiornare =
-                    from prod in context.Prodotto
-                    where prod.IdProdotto == idProdotto
-                    select prod;
+            var prodottoDaAggiornare =
+                from prod in context.Prodotto
+                where prod.IdProdotto == idProdotto
+                select prod;
 
-                if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
+            if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
 
-                Prodotto p = prodottoDaAggiornare.First();
-                p.NomeProdotto = nome;
-                context.SaveChanges();
-            }
-
-            //aggiorno descrizione
-            if (idProdotto != null && descrizione.Length > 0)
-            {
-                var prodottoDaAggiornare =
-                    from prod in context.Prodotto
-                    where prod.IdProdotto == idProdotto
-                    select prod;
-
-                if (prodottoDaAggiornare.Count() == 0) return RedirectToAction("CatalogoProdotti");
-
-                Prodotto p = prodottoDaAggiornare.First();
-                p.DescrizioneProdotto = descrizione;
-                context.SaveChanges();
-            }
-
-
-            //CASO IN CUI DEVO AGGIORNARE
-            if (idProdotto != null && stato != null)
-            {
-                Boolean update = false;
-                if (stato == true)
-                {
-                    update = true;
-                }
-                var prodottoDaAggiornare =
-                    from prod in context.Prodotto
-                    where prod.IdProdotto == idProdotto
-                    select prod;
-
-                Prodotto p = prodottoDaAggiornare.SingleOrDefault();
-                p.Disponibile = update;
-                context.SaveChanges();
-
-            }
-
-            if (sconto != null && sconto > 0 && idProdotto != null)
-            {
-                //recupero il prodotto da aggiornare
-                var prodottoDaAggiornare =
-                    from prod in context.Prodotto
-                    where prod.IdProdotto == idProdotto
-                    select prod;
-                Prodotto p = prodottoDaAggiornare.SingleOrDefault();
-                p.Sconto = (byte)sconto;
-                context.SaveChanges();
-            }
-
-
-            var catalogoProdotti =
-            from prod in context.Prodotto
-            select prod;
-            return View(catalogoProdotti.ToList());
-
-
+            Prodotto p = prodottoDaAggiornare.First();
+            p.NomeProdotto = nome;
+            p.DescrizioneProdotto = descrizione;
+            p.Disponibile = stato.Equals(true);
+            p.Prezzo = Decimal.Parse(prezzo);
+            p.Sconto = (byte)sconto;
+            context.SaveChanges();
+            
+            return RedirectToAction("CatalogoProdotti");
         }
 
-        /*
-        * da sistemare o ottimizzare questo pezzo, successivamente traformare la vista in tabella filtrabile
-        * */
         public IActionResult ElencoOrdini(int? idOrdine, string stato)
         {
-            if (idOrdine != null && stato != null)
-                if (stato.Equals("Processato"))
-                {
-                    var ordineDaAggiornare =
-                        from ord in context.Ordine
-                        where ord.IdOrdine == idOrdine
-                        select ord;
+            //Aggiorna lo stato solo se viene selezionato "Processato"
+            if (idOrdine != null && "Processato".Equals(stato))
+            {
+                var ordineDaAggiornare =
+                    from ord in context.Ordine
+                    where ord.IdOrdine == idOrdine
+                    select ord;
 
-                    Ordine p = ordineDaAggiornare.First();
-                    p.Stato = stato;
-                    p.DataSpedizione = DateTime.Now;
-                    context.SaveChanges();
-                }
+                Ordine p = ordineDaAggiornare.First();
+                p.Stato = stato;
+                p.DataSpedizione = DateTime.Now;
+                context.SaveChanges();
+            }
 
-
-            List<VistaProdottoOrdine> vista = new List<VistaProdottoOrdine>();
-            VistaProdottoOrdine tmpAdd;
-            var idProdottiAcquistatiOrdinatiUltimo =
+            var vista =
               from op in context.Ordine_Prodotto
               join p in context.Prodotto on op.IdProdotto equals p.IdProdotto
               join o in context.Ordine on op.IdOrdine equals o.IdOrdine
-              select new
+              select new VistaProdottoOrdine
               {
                   IdOrdine = op.IdOrdine,
                   DataOrdine = o.DataOrdine,
@@ -265,24 +201,7 @@ namespace GranBazar.Controllers
                   Email = o.Email,
 
               };
-
-            foreach (var t in idProdottiAcquistatiOrdinatiUltimo)
-            {
-                tmpAdd = new VistaProdottoOrdine();
-                tmpAdd.IdOrdine = t.IdOrdine;
-                tmpAdd.DataOrdine = t.DataOrdine;
-                tmpAdd.DataSpedizione = t.DataSpedizione;
-                tmpAdd.Quantita = t.Quantita;
-                tmpAdd.IdProdotto = t.IdProdotto;
-                tmpAdd.NomeProdotto = t.NomeProdotto;
-                tmpAdd.DescrizioneProdotto = t.DescrizioneProdotto;
-                tmpAdd.Prezzo = t.Prezzo;
-                tmpAdd.Sconto = t.Sconto;
-                tmpAdd.Email = t.Email;
-                tmpAdd.Stato = t.Stato;
-                vista.Add(tmpAdd);
-            }
-            return View(vista);
+            return View(vista.ToList());
 
         }
 
@@ -297,6 +216,7 @@ namespace GranBazar.Controllers
                 join f in context.Prodotto
                 on e.IdProdotto equals f.IdProdotto
                 where x.Email.Equals(utenteLoggato.Email)
+                
                 select new VistaProdottoOrdine
                 {
                     IdOrdine = e.IdOrdine,
@@ -312,36 +232,33 @@ namespace GranBazar.Controllers
                     DataSpedizione = x.DataSpedizione
                 };
 
+            //filtriamo per IdOrdine in quanto è autoincrementale e corrisponde ad un ordine temporale
+            elencoOrdini = elencoOrdini.OrderByDescending(x => x.IdOrdine);
+                
             var elencoId = elencoOrdini
                 .Select(x => new { x.IdOrdine })
-                .Distinct();
+                .Distinct()
+                .ToList();
 
             //converto elencoOrdini in lista
             var elencoOrdiniInFormatoLista = elencoOrdini.ToList();
-
-            //converto listaId in lista
-            var elencoIdInFormatoLista = elencoId.ToList();
-
 
             Dictionary<int, List<VistaProdottoOrdine>> elencoIdOrdiniConAssociatoElencoProdotti = new Dictionary<int, List<VistaProdottoOrdine>>();
 
             //dichiaro una lista temporanea che conterrà l'elenco prodotti per un singolo id ordine
             List<VistaProdottoOrdine> listaTmp = new List<VistaProdottoOrdine>();
 
-            int ordineIdPerHash = 0;
-
-            for (int i = 0; i < elencoIdInFormatoLista.Count(); i++)
+            for (int i = 0; i < elencoId.Count(); i++)
             {
                 listaTmp = new List<VistaProdottoOrdine>();
                 for (int j = 0; j < elencoOrdiniInFormatoLista.Count(); j++)
                 {
-                    if (elencoOrdiniInFormatoLista.ElementAt(j).IdOrdine == elencoIdInFormatoLista.ElementAt(i).IdOrdine)
+                    if (elencoOrdiniInFormatoLista.ElementAt(j).IdOrdine == elencoId.ElementAt(i).IdOrdine)
                     {
                         listaTmp.Add(elencoOrdiniInFormatoLista.ElementAt(j));
-                        ordineIdPerHash = elencoIdInFormatoLista.ElementAt(i).IdOrdine;
                     }
                 }
-                elencoIdOrdiniConAssociatoElencoProdotti.Add(ordineIdPerHash, listaTmp);
+                elencoIdOrdiniConAssociatoElencoProdotti.Add(elencoId.ElementAt(i).IdOrdine, listaTmp);
             }
 
             ViewData["elencoOrdini"] = elencoIdOrdiniConAssociatoElencoProdotti;
