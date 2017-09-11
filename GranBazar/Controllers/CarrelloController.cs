@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GranBazar.Models;
 using Microsoft.AspNetCore.Http;
-using GranBazar.Src;
 using GranBazar.Data;
 
 namespace GranBazar.Controllers
@@ -22,7 +21,6 @@ namespace GranBazar.Controllers
             this.context = context;
         }
 
-        //Valutare se tenere il numero di elementi nel carrello
         public IActionResult Index(int? id)
         {
             var count = 0;
@@ -75,14 +73,6 @@ namespace GranBazar.Controllers
                     HttpContext.Session.Set<List<Prodotto>>("prodottiCarrello", prodottiInCarrello);
                     HttpContext.Session.Set<List<int>>("quantitaPerProdotto", quantitaPerProdotto);
                 }
-            }
-
-            //Valutare se tenerlo o meno
-            if (HttpContext.Session.Get<List<int>>("quantitaPerProdotto") != null)
-            {
-                foreach (var x in HttpContext.Session.Get<List<int>>("quantitaPerProdotto"))
-                    count += x;
-                HttpContext.Session.SetInt32("numeroElementiInCarrello", count);
             }
 
             return View();
@@ -146,10 +136,7 @@ namespace GranBazar.Controllers
             HttpContext.Session.Remove("prodottiCarrello");
             HttpContext.Session.Remove("quantitaPerProdotto");
 
-            HttpContext.Session.SetInt32("numeroElementiInCarrello", 0);
             return RedirectToAction("Index");
-
-
         }
 
     }

@@ -2,34 +2,13 @@
     ViewBag.Title = "Register";
     Layout = "_LayoutEmpty";
 }
-<!--
-<div class="box k-block k-info-colored">
-    <form method="POST">
-        <ul class="fieldlist">
-            <li>
-                <label for="email">Email</label>
-                <input type="email" class="k-textbox" id="email" name="email" style="width:100%;">
-            </li>
-            <li>
-                <label for="password">Password</label>
-                <input type="password" class="k-textbox" id="password" name="password"
-                       style="width: 100%;">
-            </li>
-            <li>
-                <label for="repassword">Type password again</label>
-                <input type="password" class="k-textbox" id="repassword" name="repassword"
-                       style="width: 100%;">
-            </li>
-            <li>
-                <button type="submit" class="k-button k-primary">Register</button>
-            </li>
-        </ul>
-    </form>
-    <div asp-validation-summary="All" class="fieldlist text-error"></div>
-</div>
-    -->
+
 
 <div id="signupbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    @if (TempData["errore"] != null){
+        <div asp-validation-summary="All" class="alert alert-danger"></div>}
+    @if (TempData["successo"] != null){
+        <div class="alert alert-success">Utente creato correttamente. Torna sull'HomePage cliccando <a href="/">qui</a></div>}
     <div class="panel panel-info">
         <div class="panel-heading">
             <div class="panel-title">Registrazione</div>
@@ -77,7 +56,5 @@
         </div>
     </div>
 
-
-    <div asp-validation-summary="All" class="fieldlist text-error"></div>
 </div>
    

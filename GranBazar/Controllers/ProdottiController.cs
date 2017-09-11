@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using GranBazar.Data;
 using Microsoft.EntityFrameworkCore;
-using GranBazar.Dto;
 using GranBazar.Models;
 
 namespace GranBazar.Controllers

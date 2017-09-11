@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GranBazar.Models;
 using GranBazar.Data;
 using Microsoft.AspNetCore.Http;
-using GranBazar.Src;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GranBazar.Controllers
 {
@@ -34,7 +34,8 @@ namespace GranBazar.Controllers
         {
             if (password != repassword)
             {
-                ModelState.AddModelError(string.Empty, "Password don't match");
+                ModelState.AddModelError("errore", "Attenzione, reinserire la stessa password.");
+                TempData["errore"] = "errore";
                 return View();
             }
 
@@ -45,6 +46,18 @@ namespace GranBazar.Controllers
             };
 
             var userCreationResult = await userManager.CreateAsync(newUser, password);
+
+            var utente =
+                     from x in context.Utente
+                     where x.Email.Equals(email)
+                     select x;
+            if(utente.Count() > 0)
+                if(utente.First().Email.Equals(email))
+                {
+                    ModelState.AddModelError("errore", "Attenzione, email già presente nel sistema.");
+                    TempData["errore"] = "errore";
+                    return View();
+                }
 
             context.Utente.Add(new Utente
             {
@@ -62,7 +75,9 @@ namespace GranBazar.Controllers
                 return View();
             }
 
-            return Content("User created");
+     
+            TempData["successo"] = "successo";
+            return View();
         }
 
         public IActionResult Login() => View();
@@ -78,6 +93,7 @@ namespace GranBazar.Controllers
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email non corretta. Riprova.");
+                    TempData["errore"] = "errore";
                     return View();
                 }
                 var passwordSignInResult = await signInManager.PasswordSignInAsync(user, password,
@@ -85,6 +101,7 @@ namespace GranBazar.Controllers
                 if (!passwordSignInResult.Succeeded)
                 {
                     ModelState.AddModelError(string.Empty, "Password non corretta. Riprova.");
+                    TempData["errore"] = "errore";
                     return View();
                 }
 
@@ -94,6 +111,7 @@ namespace GranBazar.Controllers
                      select x;
 
                 HttpContext.Session.Set<Utente>("utenteLoggato",(Utente) utente.Single());
+                
 
                 return Redirect(url);
 
@@ -112,6 +130,7 @@ namespace GranBazar.Controllers
             return Redirect("~/");
         }
 
+        [Authorize]
         public IActionResult ElencoUtenti(string email, string ruolo)
         {
             if ("Admin".Equals(ruolo) || "User".Equals(ruolo))
@@ -133,6 +152,7 @@ namespace GranBazar.Controllers
             return View(utente.ToList());
         }
 
+        [Authorize]
         public IActionResult CatalogoProdotti(int? idProdotto,string nome, string descrizione, bool? stato, string prezzo, int sconto)
         {
             //Controllo se non è una modifica
@@ -166,6 +186,7 @@ namespace GranBazar.Controllers
             return RedirectToAction("CatalogoProdotti");
         }
 
+        [Authorize]
         public IActionResult ElencoOrdini(int? idOrdine, string stato)
         {
             //Aggiorna lo stato solo se viene selezionato "Processato"
@@ -205,6 +226,7 @@ namespace GranBazar.Controllers
 
         }
 
+        [Authorize]
         public IActionResult AreaRiservataUser()
         {
             var utenteLoggato = HttpContext.Session.Get<Utente>("utenteLoggato");

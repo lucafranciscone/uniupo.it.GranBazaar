@@ -2,7 +2,6 @@
     var listaProdotti = HttpContextAccessor.HttpContext.Session.Get<List<Prodotto>>("prodottiCarrello");
     var listaQuantita = HttpContextAccessor.HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
     var utenteLoggato = HttpContextAccessor.HttpContext.Session.Get<Utente>("utenteLoggato");
-    var numeroDiElementiInCarrello = HttpContextAccessor.HttpContext.Session.GetInt32("numeroElementiInCarrello");
     string ruolo = "";
     if (utenteLoggato != null) { ruolo = utenteLoggato.Ruolo; };
 }

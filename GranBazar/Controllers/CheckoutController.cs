@@ -28,8 +28,6 @@ namespace GranBazar.Controllers
             HttpContext.Session.Remove("prodottiCarrello");
             var tempQta = HttpContext.Session.Get<List<int>>("quantitaPerProdotto");
             HttpContext.Session.Remove("quantitaPerProdotto");
-            //valutare se nel menù lasciare la quantità di oggetti nel carrello
-            HttpContext.Session.Remove("numeroElementiInCarrello");
 
             var utenteLoggato = HttpContext.Session.Get<Utente>("utenteLoggato");
 
