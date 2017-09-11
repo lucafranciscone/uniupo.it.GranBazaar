@@ -12,7 +12,8 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <div class="panel-title">Registrazione</div>
-            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink"  onclick="@("window.location.href='" + @Url.Action("Login", "Account") + "'");">Log In</a></div>
+            @if (TempData["successo"] == null)
+            {<div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink"  onclick="@("window.location.href='" + @Url.Action("Login", "Account") + "'");">Log In</a></div>}
         </div>
         <div class="panel-body">
             <form id="signupform" class="form-horizontal" method="post">

@@ -18,12 +18,14 @@ namespace GranBazar.Controllers
 
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
+        readonly RoleManager<IdentityRole> roleManager;
         readonly BazarContext context;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, BazarContext context)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager , BazarContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
             this.context = context;
         }
 
@@ -42,10 +44,28 @@ namespace GranBazar.Controllers
             var newUser = new IdentityUser
             {
                 UserName = email,
-                Email = email
+                Email = email,
             };
 
+            //creo i ruoli
+           var newRoleUser = new IdentityRole
+            {
+                Name = "User"
+            };
+            var newRoleAdmin = new IdentityRole
+            {
+                Name = "Admin"
+            };
+
+
+            await roleManager.CreateAsync(newRoleUser);
+            await roleManager.CreateAsync(newRoleAdmin);
+
+            //creo lo user
             var userCreationResult = await userManager.CreateAsync(newUser, password);
+            //aggiungo allo user appena creato il ruolo "User"
+            await userManager.AddToRoleAsync(newUser, newRoleUser.Name);
+
 
             var utente =
                      from x in context.Utente
@@ -75,7 +95,6 @@ namespace GranBazar.Controllers
                 return View();
             }
 
-     
             TempData["successo"] = "successo";
             return View();
         }
@@ -130,8 +149,8 @@ namespace GranBazar.Controllers
             return Redirect("~/");
         }
 
-        [Authorize]
-        public IActionResult ElencoUtenti(string email, string ruolo)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ElencoUtenti(string email, string ruolo)
         {
             if ("Admin".Equals(ruolo) || "User".Equals(ruolo))
             {
@@ -143,6 +162,19 @@ namespace GranBazar.Controllers
                 Utente u = utenteDaAggiornare.SingleOrDefault();
                 u.Ruolo = ruolo;
                 context.SaveChanges();
+
+                //recupero il ruolo precedente (questa operazione è possibile solo perchè ci sono 2 ruoli)
+                String oldRole;
+                if("Admin".Equals(ruolo))
+                    oldRole = "User";
+                else
+                    oldRole = "Admin";
+
+                //Rimuovo il vecchio ruolo
+                await userManager.RemoveFromRoleAsync(userManager.FindByEmailAsync(email).Result, oldRole);
+                //Inserisco il nuovo ruolo
+                await userManager.AddToRoleAsync(userManager.FindByEmailAsync(email).Result, ruolo);
+
             }
 
             var utente =
@@ -152,7 +184,7 @@ namespace GranBazar.Controllers
             return View(utente.ToList());
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult CatalogoProdotti(int? idProdotto,string nome, string descrizione, bool? stato, string prezzo, int sconto)
         {
             //Controllo se non è una modifica
@@ -186,7 +218,7 @@ namespace GranBazar.Controllers
             return RedirectToAction("CatalogoProdotti");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult ElencoOrdini(int? idOrdine, string stato)
         {
             //Aggiorna lo stato solo se viene selezionato "Processato"
@@ -211,7 +243,7 @@ namespace GranBazar.Controllers
               {
                   IdOrdine = op.IdOrdine,
                   DataOrdine = o.DataOrdine,
-                  Stato = o.Stato,//sent processed
+                  Stato = o.Stato,
                   DataSpedizione = o.DataSpedizione,
                   Quantita = op.Quantita,
                   IdProdotto = p.IdProdotto,
@@ -226,7 +258,7 @@ namespace GranBazar.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public IActionResult AreaRiservataUser()
         {
             var utenteLoggato = HttpContext.Session.Get<Utente>("utenteLoggato");
