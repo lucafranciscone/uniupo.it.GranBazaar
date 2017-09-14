@@ -152,8 +152,6 @@ namespace GranBazar.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ElencoUtenti(string email, string ruolo)
         {
-            
-            
             if ("Admin".Equals(ruolo) || "User".Equals(ruolo))
             {
                 var utenteDaAggiornare =
@@ -161,29 +159,21 @@ namespace GranBazar.Controllers
                      where user.Email.Equals(email)
                      select user;
 
-                
-
                 Utente u = utenteDaAggiornare.SingleOrDefault();
-                //Un utente può diventare amministratore ma un amministratore non può diventare utente.
-                if("User".Equals(u.Ruolo) && "Admin".Equals(ruolo))
-                {
-                    u.Ruolo = ruolo;
-                    context.SaveChanges();
+                u.Ruolo = ruolo;
+                context.SaveChanges();
 
-                    //recupero il ruolo precedente (questa operazione è possibile solo perchè ci sono 2 ruoli)
-                    String oldRole;
-                    if ("Admin".Equals(ruolo))
-                        oldRole = "User";
-                    else
-                        oldRole = "Admin";
+                //recupero il ruolo precedente (questa operazione è possibile solo perchè ci sono 2 ruoli)
+                String oldRole;
+                if("Admin".Equals(ruolo))
+                    oldRole = "User";
+                else
+                    oldRole = "Admin";
 
-                    //Rimuovo il vecchio ruolo
-                    await userManager.RemoveFromRoleAsync(userManager.FindByEmailAsync(email).Result, oldRole);
-                    //Inserisco il nuovo ruolo
-                    await userManager.AddToRoleAsync(userManager.FindByEmailAsync(email).Result, ruolo);
-                }
-
-   
+                //Rimuovo il vecchio ruolo
+                await userManager.RemoveFromRoleAsync(userManager.FindByEmailAsync(email).Result, oldRole);
+                //Inserisco il nuovo ruolo
+                await userManager.AddToRoleAsync(userManager.FindByEmailAsync(email).Result, ruolo);
 
             }
 
